@@ -29,8 +29,4 @@ const Header = () => {
         </div>
     );
 };
-
-const Footer = ()=>{
-    return (<div>Footer</div>)
-}
-export { Header,Footer};
+export default Header;

@@ -1,10 +1,11 @@
-import {Header,Footer} from "../components/client/Header";
-
-
-const User =()=>{
-    
-    return( <div>
-        Home
-    </div>)
-}
+// import Header from "../components/client/Header";
+import Footer from '../components/client/Footer';
+const User = () => {
+  return (
+    <div>
+        {/* <Header></Header> */}
+        <Footer />
+    </div>
+  )
+};
 export default User;

@@ -10,25 +10,7 @@ import axios from 'axios';
 
 function App() {
   const [theme, colorMode] = useMode();
-  const [role, setRole] = useState(null); // State để lưu vai trò người dùng
-
-  useEffect(() => {
-    // Hàm xử lý đăng nhập
-    const handleLogin = async (email, password) => {
-      try {
-        const response = await axios.post('http://127.0.0.1:8000/api/login', { email, password });
-        const role = response.data.role;
-        // Lưu vai trò vào state
-        setRole(role === 1 ? 'admin' : role === 0 ? 'user' : 'user');
-      } catch (error) {
-        console.error('Đăng nhập không thành công:', error.response.data.error);
-        setRole('error'); // Trường hợp lỗi
-      }
-    };
-    // Gọi hàm đăng nhập khi component được mount
-    handleLogin('hoanghung@gmail.com', '123456789');
-  }, []); // Dùng [] để chỉ chạy một lần khi component được mount
-  // Kiểm tra vai trò và render phần giao diện tương ứng
+  let role = 'user';
   return (
     <>
       {role === 'admin' ? (
