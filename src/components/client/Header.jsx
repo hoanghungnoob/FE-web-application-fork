@@ -51,16 +51,16 @@ function Header() {
         </div>
         <div className="headerCenter">
           <ul className="headerList">
-            <li><a href="#" className={activeLink === "home" ? "active" : ""} onClick={() => handleLinkClick("home")}>Home</a></li>
-            <li><a href="#" className={activeLink === "about" ? "active" : ""} onClick={() => handleLinkClick("about")}>About</a></li>
-            <li><a href="#" className={activeLink === "menu" ? "active" : ""} onClick={() => handleLinkClick("menu")}>Menu</a></li>
-            <li><a href="#" className={activeLink === "book" ? "active" : ""} onClick={() => handleLinkClick("book")}>Book</a></li>
-            <li><a href="#" className={activeLink === "pages" ? "active" : ""} onClick={() => handleLinkClick("pages")}>Pages</a></li>
-            <li><a href="#" className={activeLink === "contact" ? "active" : ""} onClick={() => handleLinkClick("contact")}>Contact</a></li>
+            <li><a href="/home" className={activeLink === "home" ? "active" : ""} onClick={() => handleLinkClick("home")}>Home</a></li>
+            <li><a href="/about" className={activeLink === "about" ? "active" : ""} onClick={() => handleLinkClick("about")}>About</a></li>
+            <li><a href="/menu" className={activeLink === "menu" ? "active" : ""} onClick={() => handleLinkClick("menu")}>Menu</a></li>
+            <li><a href="/book" className={activeLink === "book" ? "active" : ""} onClick={() => handleLinkClick("book")}>Book</a></li>
+            <li><a href="/pages" className={activeLink === "pages" ? "active" : ""} onClick={() => handleLinkClick("pages")}>Pages</a></li>
+            <li><a href="/contact" className={activeLink === "contact" ? "active" : ""} onClick={() => handleLinkClick("contact")}>Contact</a></li>
           </ul>
         </div>
         <div className="headerRight">
-          <button>Login</button>
+         <a href="/login" > <button>Login</button></a>
         </div>
       </div>
     </div>

@@ -1,9 +1,9 @@
-// import Header from "../components/client/Header";
+import Header from "../components/client/Header";
 import Footer from '../components/client/Footer';
 const User = () => {
   return (
     <div>
-        {/* <Header></Header> */}
+        <Header />
         <Footer />
     </div>
   )

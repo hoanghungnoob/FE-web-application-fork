@@ -5,7 +5,7 @@ import Topbar from "./admin/scenes/globals/Topbar";
 import Sidebar from "./admin/scenes/globals/Sidebar";
 import Dashboard from "./admin/scenes/dashboard";
 import User from "./clients/home";
-import Header from "./components/client/Header";
+import Login from "./clients/login";
 import { Routes, Route } from "react-router-dom";
 import axios from 'axios';
 
@@ -14,7 +14,6 @@ function App() {
   let role = 'user';
   return (
     <>
-      <Header />
       {role === 'admin' ? (
         <ColorModeContext.Provider value={colorMode}>
           <ThemeProvider theme={theme}>
@@ -36,6 +35,8 @@ function App() {
           {role === 'user' && (
             <Routes>
               <Route path="/" element={<User />} />
+              <Route path="/login" element={<Login />} />
+              {/* Thêm các route khác cho user nếu cần */}
             </Routes>
           )}
         </>
