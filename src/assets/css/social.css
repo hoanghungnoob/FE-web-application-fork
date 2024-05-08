@@ -1,0 +1,35 @@
+
+a {
+    text-decoration: none !important;
+}
+
+.header-top-right {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.header-top-right-bg {
+    width: 27.171px;
+    height: 27.171px;
+    background-color: #AD343E;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fa-twitter,
+.fa-facebook,
+.fa-instagram,
+.fa-github {
+    color: white;
+    width: 10.843px;
+    height: 8.765px;
+    flex-shrink: 0;
+
+    /* Thêm các thuộc tính sau để căn giữa */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

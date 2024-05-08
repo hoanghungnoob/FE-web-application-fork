@@ -1,0 +1,146 @@
+
+.footer {
+    Width: 100%;
+    Height: 778px;
+    background-color: #474747;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: ffffff;
+}
+
+.footer-content{
+    height: 419px;
+    width: 80%;
+}
+
+.footer-logo p{
+    width: 85%;
+    margin: 30px 0;
+}
+.footer-logo p {
+    color:  #DBDFD0;
+}
+.footer-line{
+    width: 80%; 
+    margin-top:100px; 
+}
+
+.footer-pages{
+    gap: 80px;
+}
+.logo{
+    margin-left: 20%;
+}
+
+.footer-pages-title1{
+    color: #ffffff;
+    margin-bottom: 40px;
+    margin-left: -18px;
+}
+.footer-pages-title2{
+    color: #ffffff;
+    margin-bottom: 40px;
+    margin-left: 2px;
+}
+.footer-pages-title3{
+    color: #ffffff;
+    margin-bottom: 40px;
+}
+.footer-pages-title1 .menu2 li a{
+    color: #DBDFD0;
+    text-decoration: none;
+}
+.footer-pages-title2 .menu2 li a{
+    color: #DBDFD0;
+    text-decoration: none;
+}
+.footer-pages-title1 .menu2 li a:hover{
+    color: #AD343E;
+}
+.footer-pages-title2 .menu2 li a:hover{
+    color: #AD343E;
+}
+.footer-pages-title2 .menu2 li {
+    margin-bottom: 20px;
+}
+.footer-pages-title1 .menu2 li {
+    margin-bottom: 20px;
+}
+.footer-pages-title1 .menu2 {
+    list-style-type: none;
+    margin-top: 20px;
+    padding-left: 0;
+}
+.footer-pages-title2  .menu2 {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+hr{
+    border-color: aqua;
+}
+
+.footer-copyright{
+    margin-top:30px;
+}
+.footer-copyright > p {
+    color: #ffffff !important;
+}
+.card {
+    padding: 0;
+    width: 18rem;
+    overflow: hidden;
+    perspective: 1000px;
+    border-radius: 12px;
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.add-to-cart-btn {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: none;
+}
+.card:hover .card-img-top{
+    opacity: 0.5;
+}
+
+.card:hover .add-to-cart-btn {
+    /* opacity: 1; */
+    display: block;
+    border: 1px solid;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #0056b3;
+}
+
+.card-img-top {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    object-fit: cover;
+}
+  
+img {
+    border-radius: 12px;
+}
+img {
+    width: 200px;
+    height: 150px;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
