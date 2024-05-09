@@ -55,7 +55,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="login-container">
     <Header />
       <div className="container-fluid" id="container-fluid">
         <div className="container-fluid pb-5" id="bg-1">
