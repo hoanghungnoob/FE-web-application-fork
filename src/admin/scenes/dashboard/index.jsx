@@ -1,21 +1,33 @@
-import { Box, Button, useTheme } from "@mui/material";
+import { Box, useTheme, Grid } from "@mui/material";
 import { tokens } from "../../../theme";
 import Header from "../../../components/admin/Header";
+import Ratebox from "../../../components/admin/Ratebox";
+
 const Dashboard = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    
+    const rateboxData = [
+        { title: "Number of users", number: 10, percent: 20, color: colors.greenAccent[300] },
+        { title: "Weekly Orders", number: 20, percent: 30, color: colors.orangeContrast[500] },
+        { title: "Revenue", number: 30, percent: 40, color: colors.cyanContrast[500] }
+    ]
+
     return (
-        <Box>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
-                <Button 
-                    variant="outlined" 
-                    type="submit" 
-                    sx={{ color: colors.greenAccent[400], borderColor: colors.greenAccent[400] }}
-                >
-                    Submit
-                </Button>
-            </Box>
+        <Box marginLeft={"10px"}>
+            <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+            <Grid container spacing={3}  paddingLeft={"20px"}>
+                {rateboxData.map((data, index) => (
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                        <Ratebox
+                            title={data.title}
+                            number={data.number}
+                            percent={data.percent}
+                            color={data.color}
+                        />
+                    </Grid>
+                ))}
+            </Grid>
         </Box>
     );
 }

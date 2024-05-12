@@ -4,6 +4,7 @@ import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import Topbar from "./admin/scenes/globals/Topbar";
 import Sidebar from "./admin/scenes/globals/Sidebar";
 import Dashboard from "./admin/scenes/dashboard";
+import Team from './admin/scenes/team';
 import User from "./clients/home";
 import Login from "./clients/login";
 import { Routes, Route } from "react-router-dom";
@@ -11,7 +12,7 @@ import axios from 'axios';
 
 function App() {
   const [theme, colorMode] = useMode();
-  let role = 'user';
+  const role = 'admin';
   return (
     <>
       {role === 'admin' ? (
@@ -22,10 +23,12 @@ function App() {
               <Sidebar />
               <main className="content">
                 <Topbar />
-                <Routes>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                </Routes>
+                  <Routes>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/team" element={<Team />} />
+                    
+                  </Routes>
               </main>
             </Box>
           </ThemeProvider>
