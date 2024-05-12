@@ -57,7 +57,7 @@ function Footer() {
             <div className="row">
               {imagesFooterArr.map((image) => (
                 <div className="col-md-5">
-                  <img src={image} alt="img"></img>
+                  <img className="footer-image"  src={image} alt="img"></img>
                 </div>
               ))}
             </div>
@@ -65,7 +65,7 @@ function Footer() {
         </div>
       </div>
       <div className="footer-line">
-        <hr></hr>
+        <hr ></hr>
       </div>
       <div classNameName="footer-copyright">
         <p>Copyright © 2023 Hashtag Developer. All Rights Reserved</p>

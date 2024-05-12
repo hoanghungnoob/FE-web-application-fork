@@ -1,4 +1,3 @@
-
 .footer {
     Width: 100%;
     Height: 778px;
@@ -9,7 +8,6 @@
     align-items: center;
     color: ffffff;
 }
-
 .footer-content{
     height: 419px;
     width: 80%;
@@ -30,10 +28,6 @@
 .footer-pages{
     gap: 80px;
 }
-.logo{
-    margin-left: 20%;
-}
-
 .footer-pages-title1{
     color: #ffffff;
     margin-bottom: 40px;
@@ -78,7 +72,7 @@
     padding-left: 0;
     margin-top: 20px;
 }
-hr{
+.footer-line hr{
     border-color: aqua;
 }
 
@@ -87,57 +81,11 @@ hr{
 }
 .footer-copyright > p {
     color: #ffffff !important;
-}
-.card {
-    padding: 0;
-    width: 18rem;
-    overflow: hidden;
-    perspective: 1000px;
-    border-radius: 12px;
-    position: relative; 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.add-to-cart-btn {
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: none;
-}
-.card:hover .card-img-top{
-    opacity: 0.5;
-}
-
-.card:hover .add-to-cart-btn {
-    /* opacity: 1; */
-    display: block;
-    border: 1px solid;
-}
-
-.add-to-cart-btn:hover {
-    background-color: #0056b3;
-}
-
-.card-img-top {
-    margin: 0;
-    padding: 0;
-    max-width: 100%;
-    object-fit: cover;
-}
-  
-img {
+}  
+.footer-image {
     border-radius: 12px;
 }
-img {
+.footer-image {
     width: 200px;
     height: 150px;
     margin-top: 20px;
