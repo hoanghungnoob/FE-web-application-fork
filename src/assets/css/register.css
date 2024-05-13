@@ -1,0 +1,71 @@
+.register-form-container {
+    width: 30%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 40px;
+    padding: 20px;
+  }
+  
+  .form-label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-control {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+
+  .register-form-container form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  .option-login{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+  .register-page .register-form-container form button {
+    border-radius: 15px;
+    background-color: #AD343E;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .register-page .register-form-container form button:hover {
+    background-color: #8C292F; /* Màu hover có thể thay đổi */
+  }
+
+  .error-feedback{
+    color: red;
+    margin-top: 5px;
+  }
+  .footer{
+    margin-top: 20px;
+  }

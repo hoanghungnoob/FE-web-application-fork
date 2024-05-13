@@ -9,6 +9,7 @@ import User from "./clients/home";
 import Login from "./clients/login";
 import { Routes, Route } from "react-router-dom";
 import axios from 'axios';
+import RegisterPage from './clients/register';
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -38,6 +39,7 @@ function App() {
           {role === 'user' && (
             <Routes>
               <Route path="/" element={<User />} />
+              <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<Login />} />
               {/* Thêm các route khác cho user nếu cần */}
             </Routes>
