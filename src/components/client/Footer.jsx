@@ -27,7 +27,7 @@ function Footer() {
                         <ul className="menu2">
                         {pageArr.map((page)=>
                           <li>
-                            <NavLink to={page.url} activeClassName='active'>{page.page}</NavLink>
+                            <Link to={page.url} >{page.page}</Link>
                           </li>
                         )}
                         </ul>
@@ -41,7 +41,7 @@ function Footer() {
                         <ul className="menu2">
                         {utilityPagesArr.map((page)=>
                           <li>
-                          <NavLink to="#" activeClassName='active'>{page}</NavLink>
+                          <Link to="#">{page}</Link>
                           </li>
                         )}
                         </ul>
@@ -67,7 +67,7 @@ function Footer() {
       <div className="footer-line">
         <hr ></hr>
       </div>
-      <div classNameName="footer-copyright">
+      <div className="footer-copyright">
         <p>Copyright © 2023 Hashtag Developer. All Rights Reserved</p>
       </div>
     </div>

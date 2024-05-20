@@ -13,7 +13,7 @@ import RegisterPage from './clients/register';
 
 function App() {
   const [theme, colorMode] = useMode();
-  const role = 'admin';
+  let role = 'user';
   return (
     <>
       {role === 'admin' ? (

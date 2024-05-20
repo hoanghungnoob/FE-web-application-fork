@@ -1,0 +1,20 @@
+.card:hover {
+    transform: translate(10px, 10px);
+    transition: transform 0.3s ease-in-out;
+    }
+.card {
+    padding: 0;
+    width: 100%;
+    border-radius: 12px;
+}
+.card-blog{
+    width: 18rem;
+}
+.card-body{
+    height: 111px;
+}
+.card-larger{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+} 
