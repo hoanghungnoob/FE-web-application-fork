@@ -1,5 +1,5 @@
 import React from "react";
-import "../../assets/css/logo.css";
+import "../assets/css/logo.css";
 export function Logo () {
     return (
     <div class='logo-container'>

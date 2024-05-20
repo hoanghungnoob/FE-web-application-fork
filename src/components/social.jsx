@@ -1,5 +1,5 @@
 import {Route, Link, NavLink} from 'react-router-dom';
-import '../../assets/css/social.css';
+import '../assets/css/social.css';
 function Social() {
   return (
     <div className="header-top-right">

@@ -1,11 +1,11 @@
 import React from "react";
 import Title from "./Title";
-import blog1 from "../../../assets/images/blog1.png";
-import blog2 from "../../../assets/images/blog2.png";
-import blog3 from "../../../assets/images/blog3.png";
-import blog4 from "../../../assets/images/blog4.png";
-import blog5 from "../../../assets/images/blog5.png";
-import "../../../assets/css/clients/blog.css";
+import blog1 from "../../assets/images/blog1.png";
+import blog2 from "../../assets/images/blog2.png";
+import blog3 from "../../assets/images/blog3.png";
+import blog4 from "../../assets/images/blog4.png";
+import blog5 from "../../assets/images/blog5.png";
+import "../../assets/css/clients/blog.css";
 import CardBlog from "../card/CardBlog";
 import { ReadAllArticles } from "../button/Button.stories";
 import { data } from "autoprefixer";

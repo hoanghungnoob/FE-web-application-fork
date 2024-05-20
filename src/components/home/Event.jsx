@@ -1,8 +1,8 @@
 import Title from "./Title";
-import birthday from '../../../assets/images/birthday.jpg';
-import event from '../../../assets/images/event.jpg';
-import wedding from '../../../assets/images/wedding.jpg';
-import catering from '../../../assets/images/catering.jpg';
+import birthday from '../../assets/images/birthday.jpg';
+import event from '../../assets/images/event.jpg';
+import wedding from '../../assets/images/wedding.jpg';
+import catering from '../../assets/images/catering.jpg';
 import CardItem from "../card/Card";
 const styleListCart = {
     display: "flex",

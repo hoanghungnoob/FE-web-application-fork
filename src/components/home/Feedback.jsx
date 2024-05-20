@@ -1,4 +1,4 @@
-import contactImage from "../../../assets/images/contactImage.jpg";
+import contactImage from "../../assets/images/contactImage.jpg";
 import Title from "../home/Title";
 function Feedback() {
   return (

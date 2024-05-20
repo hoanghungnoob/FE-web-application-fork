@@ -1,4 +1,4 @@
-import contactImage from '../../../assets/images/contactImage.jpg';
+import contactImage from '../../assets/images/contactImage.jpg';
 import { Link } from "react-router-dom";
 import { MoreAboutUs } from '../button/Button.stories'
 import Title from "../home/Title";

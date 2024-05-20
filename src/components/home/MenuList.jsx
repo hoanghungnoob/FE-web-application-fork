@@ -1,11 +1,11 @@
 import React from "react";
 import { Col, Row } from "antd";
-import iconmenubreakfast from "../../../assets/images/iconmenubreakfast.png";
-import iconmenumaindish from "../../../assets/images/iconmenumaindish.png";
-import iconmenudrinks from "../../../assets/images/iconmenudrinks.png";
-import iconmenudesserts from "../../../assets/images/iconmenudesserts.png";
+import iconmenubreakfast from "../../assets/images/iconmenubreakfast.png";
+import iconmenumaindish from "../../assets/images/iconmenumaindish.png";
+import iconmenudrinks from "../../assets/images/iconmenudrinks.png";
+import iconmenudesserts from "../../assets/images/iconmenudesserts.png";
 import MenuItem from "../menu/MenuItem";
-import "../../../assets/css/menuList.css";
+import "../../assets/css/menuList.css";
 import Title from "./Title";
 function MenuList() {
   const menuArr = [

@@ -1,9 +1,9 @@
 import React from "react";
-import "../../assets/css/footer.css";
-import photo1 from "../../assets/images/photo1.png";
-import photo2 from "../../assets/images/photo2.png";
-import photo3 from "../../assets/images/photo3.png";
-import photo4 from "../../assets/images/photo4.png";
+import "../assets/css/footer.css";
+import photo1 from "../assets/images/photo1.png"
+import photo2 from "../assets/images/photo2.png";
+import photo3 from "../assets/images/photo3.png";
+import photo4 from "../assets/images/photo4.png";
 import {Route, Link, NavLink} from 'react-router-dom';
 import { Logo } from "./Logo";
 import Social from "./social";

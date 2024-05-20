@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../assets/css/register.css';
-import Footer from '../components/client/Footer';
-import Header from '../components/client/Header';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 const initFormValue ={
   name: "",
@@ -68,7 +68,6 @@ export default function RegisterPage() {
       [name]: value,
     });
   };
-
   const handleBlur = (event) => {
     const { name } = event.target;
     const error = { ...formError };
@@ -92,10 +91,8 @@ export default function RegisterPage() {
       console.log("form invalid");
     }
   };
-
   return (
     <div className='register-page'>
-    <Header />
       <div className='title'>Register</div>
       <div className='register-form-container'>
         <form onSubmit={handleSubmit}>
@@ -185,12 +182,6 @@ export default function RegisterPage() {
           <button type="submit">Register</button>
         </form>
       </div>
-      <div className='footer'>
-      <Footer />
-      </div>
-      
     </div>
-    
-   
   );
 }

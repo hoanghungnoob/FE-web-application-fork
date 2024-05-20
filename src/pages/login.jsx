@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import '../assets/css/clients/login.css';
 import '../assets/css/clients/bootstrap.min.css';
-import Footer from '../components/client/Footer.jsx'; // Import Footer component
-import Header from '../components/client/Header.jsx';
+import Footer from '../components/Footer.jsx'; // Import Footer component
+import Header from '../components/Header.jsx';
 function Login() {
   const [formValue, setFormValue] = useState({
     email: '',
@@ -56,7 +56,6 @@ function Login() {
 
   return (
     <div className="login-container">
-    <Header />
       <div className="container-fluid" id="container-fluid">
         <div className="container-fluid pb-5" id="bg-1">
           <div className="container-fluid bg-1 p-5" id="bg">
@@ -98,7 +97,7 @@ function Login() {
             </div>
             <div className="row d-flex flex-column align-items-center justify-content-center pt-4 text-center">
               <p className="">
-                You don't have an account? <a href="{{route('register')}}">Register now</a>
+                You don't have an account? <a href="/register">Register now</a>
               </p>
               <button
                 type="submit"
@@ -111,8 +110,6 @@ function Login() {
           </form>
         </div>
       </div>
-
-      <Footer /> {/* Gọi component Footer */}
     </div>
   );
 }
