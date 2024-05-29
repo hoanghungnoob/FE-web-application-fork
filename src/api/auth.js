@@ -34,9 +34,28 @@ const useAuthService = () => {
             return false; // Return false if an error occurs
         }
     };
-    
 
-    return { postLogin, error };
+    const getLogout = async () => {
+        try {
+            const token = JSON.parse(sessionStorage.getItem('account')).token;
+            const res = await axios.get('http://127.0.0.1:8000/api/logout', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (res.data.status === true) {
+                sessionStorage.removeItem('account');
+                return true;
+            } else {
+                return false;
+            }
+        } catch (err) {
+            console.error('Error during logout:', err);
+            return false;
+        }
+    };
+
+    return { postLogin, getLogout, error };
 };
 
 export default useAuthService;
