@@ -14,5 +14,5 @@ export const MoreAboutUs =()=><Button variant="btn btn-second more-about-us " >M
 
 export const ReadAllArticles =()=><Button variant="btn btn-second active" >Read All Articles</Button>
 
-export const Send =()=><Button variant="send active" >Send</Button>
+export const Send =()=><Button variant="btn btn-send active" >Send</Button>
 
