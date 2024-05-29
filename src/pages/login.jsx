@@ -3,13 +3,18 @@ import '../assets/css/clients/login.css';
 import '../assets/css/clients/bootstrap.min.css';
 import Footer from '../components/Footer.jsx'; // Import Footer component
 import Header from '../components/Header.jsx';
+import useAuthService from "../api/auth.js"
+import { useNavigate } from 'react-router-dom';
+
 function Login() {
   const [formValue, setFormValue] = useState({
     email: '',
     password: '',
   });
-
+  const navigate = useNavigate();
+  const { postLogin } = useAuthService();
   const [formError, setFormError] = useState({});
+  const [error, setError] = useState(null);
 
   const isEmptyValue = (value) => {
     return !value || value.trim().length === 0;
@@ -45,15 +50,21 @@ function Login() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForm()) {
-      console.log('form value', formValue);
+      const result = await postLogin(formValue.email, formValue.password);
+      if (result) {
+        console.log('Login successful'); // Do something after successful login
+        navigate('/home');
+      } else {
+        setError('Invalid email or password'); // Set error message if login fails
+      }
     } else {
       console.log('form invalid');
     }
   };
-
+  
   return (
     <div className="login-container">
       <div className="container-fluid" id="container-fluid">
@@ -99,6 +110,8 @@ function Login() {
               <p className="">
                 You don't have an account? <a href="/register">Register now</a>
               </p>
+              {/* Thêm phần hiển thị lỗi */}
+              {error && <div className="alert alert-danger">{error}</div>}
               <button
                 type="submit"
                 className="btn btn-primary"
