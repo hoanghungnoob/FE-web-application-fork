@@ -7,6 +7,7 @@ import ComeAndVisit from "../components/home/Contact";
 import Event from "../components/home/Event";
 import Feedback from "../components/home/Feedback";
 import ListComment from '../components/home/ListComment';
+import contactImage from '../assets/images/contactImage.jpg';
 import Blog from '../components/home/Blog';
 import "../assets/css/home.css";
 const User = () => {
@@ -22,7 +23,7 @@ const User = () => {
         </div>
         </div>
                 <MenuList></MenuList>
-                <ComeAndVisit/>
+                <ComeAndVisit image={contactImage} isContactPage={true} />
                 <Event/>
                 <Feedback />
                 <ListComment/>

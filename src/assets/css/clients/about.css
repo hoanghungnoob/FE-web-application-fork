@@ -1,0 +1,149 @@
+.video-container {
+    margin-top: 50px; /* Thêm khoảng cách từ trên xuống */
+  }
+
+  .item-about {
+    padding-top: 30px;
+    display: flex;
+    width: 1200px;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+    .itemAB {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+
+    }
+
+    .item-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+    }
+
+    #large-item-content {
+        color: var(--Neutral-07, #2C2F24);
+        text-align: center;
+
+        /* Body/20px/Bold */
+        font-family: DM Sans;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 40px;
+        /* 130% */
+
+    }
+
+    #smaill-item-content {
+        color: var(--Neutral-06, #414536);
+
+        /* Body/16px/Regular */
+        font-family: DM Sans;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 15px;
+        /* 150% */
+        width: 250px;
+    }
+    #information{
+        margin-top: 80px;
+    }
+
+    .information-about {
+        display: flex;
+        width: 1600px;
+        height: 600px;
+        flex-shrink: 0;
+        background: var(--Neutral-02, #ECECEA);
+        /* Thay đổi giá trị màu hoặc thay mã màu hex tại đây */
+        padding-bottom: 80px;
+    }
+
+
+    .information-left {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding-left: 100px;
+
+    }
+
+    .cardAB {
+        width: 200px !important;
+        height: 174px !important;
+        flex-shrink: 0;
+        border-radius: 8px;
+        border: 1px solid var(--Neutral-03, #DBDFD0);
+        background: var(--Neutral-01, #FFF);
+        margin-bottom: 80px;
+    }
+
+    .cardAB h2 {
+        color: var(--Neutral-07, #2C2F24);
+        text-align: center;
+
+        /* Headline/H2 */
+        font-family: Playfair Display;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 60.5px;
+        /* 110% */
+
+    }
+
+    .cardAB p {
+        color: var(--Neutral-06, #414536);
+        text-align: center;
+
+        /* Body/18px/Medium */
+        font-family: DM Sans;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px;
+        /* 155.556% */
+    }
+
+    .card-number {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .sum-card {
+        display: flex;
+        flex-direction: column;
+        width: 45%;
+        /* Điều chỉnh chiều rộng của khung con */
+        margin-bottom: 20px;
+        gap: 20px;
+        /* Điều chỉnh khoảng cách giữa các khung */
+    }
+
+    .cardAB {
+        background-color: #f2f2f2;
+        /* Màu nền của khung */
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 10px;
+        margin-right: 15px;
+    }
+
+    .information-right img {
+
+        width: 555px;
+        height: 680px;
+
+    }
+
+    #comment-about {
+        position: relative;
+        right: 110px;
+    }

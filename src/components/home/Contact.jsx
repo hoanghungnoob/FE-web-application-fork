@@ -1,8 +1,9 @@
-import contactImage from '../../assets/images/contactImage.jpg';
+
 import { Link } from "react-router-dom";
 import { MoreAboutUs } from '../button/Button.stories'
 import Title from "../home/Title";
-function ComeAndVisit (){
+function ComeAndVisit (props){
+    const {image, isContactPage} = props;
     const contactContent = {
         position: "absolute",
         bottom: "-90px",
@@ -36,7 +37,7 @@ function ComeAndVisit (){
                 <div className="row justify-content-center align-items-center margin-center" style={{width: '100%'}}>
                     <div className="col-md-6">
                         <div className="container-image" style={containerImage}>
-                            <img src={contactImage} alt="" id="contact-image" style={contactImagestyle} />
+                            <img src={image}alt="" id="contact-image" style={contactImagestyle} />
                             <div className="contact-content" style={contactContent}>
                                 <h6 style={{fontWeight: "600", fontSize:"24px"} }>Come and visit us</h6>
                                 <div className="content">
@@ -96,9 +97,11 @@ function ComeAndVisit (){
                         At place, we believe that dining is not just about food, but also about the overall experience. 
                         Our staff, renowned for their warmth and dedication, strives to make every visit an unforgettable event.
                         </p>
-                        <div style={styleButtonAboutUs}>
-                           <Link to="/user/aboutus"> <MoreAboutUs /></Link>
-                        </div>
+                        {isContactPage && (
+                                    <div style={styleButtonAboutUs}>
+                                        <Link to="/user/aboutus"><MoreAboutUs /></Link>
+                                    </div>
+                                )}
                     </div>
                 </div>
             </div>
