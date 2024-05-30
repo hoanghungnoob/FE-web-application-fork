@@ -79,6 +79,7 @@
 }
 .btn-send{
     width: 100%;
+    border-radius: 118px !important;
 }
 .btn-explore{
     color: #AD343E !important;
@@ -91,7 +92,6 @@
 }
 /* css for button explore menu no boder in hompage */
 .btn-noboder{
-
     height: 26px;
     justify-content: center;
     align-items: center;

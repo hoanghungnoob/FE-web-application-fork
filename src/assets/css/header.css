@@ -121,7 +121,7 @@
     margin-right: 30px;
     color: white;
   }
-  .logo-title{
+  .logo-title-header{
     color: black;
     margin-left: 10px;
     font-family: Playfair Display;
@@ -130,6 +130,23 @@
     font-weight: 600;
     line-height: 10px;
     letter-spacing: -0.4px;
+}
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shopping-cart a {
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+}
+
+.avatar-user .MuiAvatar-root {
+  width: 50px;
+  height: 50px;
+  margin-right: 40px;
 }
   
   
