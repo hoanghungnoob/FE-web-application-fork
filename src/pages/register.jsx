@@ -1,64 +1,70 @@
-import React, { useState } from 'react';
-import '../assets/css/register.css';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-
-const initFormValue ={
-  name: "",
-  phone: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-};
-
-const isEmptyValue = (value) => {
-  return !value || value.trim().length === 0;
-};
-
-const isEmailValid = (email) => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-const isPhoneValid = (phone) => {
-  return /^\d{10}$/.test(phone);
-}
+import React, { useEffect, useState } from "react";
+import "../assets/css/register.css";
+import useAuthService from "../api/auth.js";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
+  const navigate = useNavigate();
+  const [errorEmail, setErrorEmail] = useState("");
 
+  const initFormValue = {
+    name: "",
+    phone: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
+
+  const isEmptyValue = (value) => {
+    return !value || value.trim().length === 0;
+  };
+
+  const isEmailValid = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const isPhoneValid = (phone) => {
+    return /^\d{10}$/.test(phone);
+  };
+
+  // export default function RegisterPage() {
+  const { postRegister } = useAuthService();
   const [formValue, setFormValue] = useState(initFormValue);
   const [formError, setFormError] = useState({});
 
-  const validateForm = () =>{
+  const validateForm = () => {
     const error = {};
 
-    if (isEmptyValue(formValue.name)){
-      error["name"]  = "Name is required";
+    if (isEmptyValue(formValue.name)) {
+      error["name"] = "Name is required";
     }
-    if (isEmptyValue(formValue.phone)){
-      error["phone"]  = "Phone is required";
+    if (isEmptyValue(formValue.phone)) {
+      error["phone"] = "Phone is required";
     } else if (!isPhoneValid(formValue.phone)) {
       error["phone"] = "Phone number must contain only digits";
     }
-    if (isEmptyValue(formValue.email)){
-      error["email"]  = "Email is required";
-    } else {
-      if (!isEmailValid(formValue.email)){
-        error["email"] = "Email is invalid";
-      }
-    }
-    if (isEmptyValue(formValue.password)){
-      error["password"]  = "Password is required";
-    }
-
-    if(isEmptyValue(formValue.confirmPassword)){
-      error["confirmPassword"] = "Confirm Password is required";
-    } else if (formValue.confirmPassword !== formValue.password){
-      error["confirmPassword"] = "Confirm Password not match";
+    if (isEmptyValue(formValue.email)) {
+      error["email"] = "Email is required";
+    } else if (!isEmailValid(formValue.email)) {
+      // if (errorEmail === "The email has already been taken.") {
+      //   error["email"] = "The email has already been taken.";
+      // }
+      error["email"] = "Email is invalid";
     }
     
+
+    if (isEmptyValue(formValue.password)) {
+      error["password"] = "Password is required";
+    }
+
+    if (isEmptyValue(formValue.confirmPassword)) {
+      error["confirmPassword"] = "Confirm Password is required";
+    } else if (formValue.confirmPassword !== formValue.password) {
+      error["confirmPassword"] = "Confirm Password not match";
+    }
     setFormError(error);
     return Object.keys(error).length === 0;
-  }
+  };
 
   const handleChange = (event) => {
     const { value, name } = event.target;
@@ -71,9 +77,10 @@ export default function RegisterPage() {
   const handleBlur = (event) => {
     const { name } = event.target;
     const error = { ...formError };
-
     if (isEmptyValue(formValue[name])) {
-      error[name] = `${name.charAt(0).toUpperCase() + name.slice(1)} is required`;
+      error[name] = `${
+        name.charAt(0).toUpperCase() + name.slice(1)
+      } is required`;
     } else if (name === "email" && !isEmailValid(formValue[name])) {
       error[name] = "Email is invalid";
     } else if (name === "phone" && !isPhoneValid(formValue[name])) {
@@ -82,25 +89,45 @@ export default function RegisterPage() {
 
     setFormError(error);
   };
-
-  const handleSubmit = (event) =>{
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if(validateForm()){
-      console.log("form value", formValue);
-    } else {
-      console.log("form invalid");
+    if (validateForm()) {
+      const response = await postRegister(
+        formValue.name,
+        formValue.phone,
+        formValue.email,
+        formValue.password,
+        formValue.confirmPassword
+      );
+  
+      if (response && !response.error) {
+        // Clear email error first
+        setErrorEmail("");
+  
+        // Wait for 1 second before showing alert and navigating
+        setTimeout(() => {
+          alert("Register successfully!");
+          navigate("/login");
+        }, 1);
+      } else {
+        console.log("form invalid", response.error.email);
+        setErrorEmail(response.error.email);
+      }
     }
   };
+  
   return (
-    <div className='register-page'>
-      <div className='title'>Register</div>
-      <div className='register-form-container'>
+    <div className="register-page">
+      <div className="title">Register</div>
+      <div className="register-form-container">
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="name" className='form-label'>Full Name</label>
+            <label htmlFor="name" className="form-label">
+              Full Name
+            </label>
             <input
               type="text"
-              className='form-control'
+              className="form-control"
               id="name"
               name="name"
               placeholder="Enter your name"
@@ -113,10 +140,12 @@ export default function RegisterPage() {
             )}
           </div>
           <div>
-            <label htmlFor="phone" className='form-label'>Phone</label>
+            <label htmlFor="phone" className="form-label">
+              Phone
+            </label>
             <input
               type="text"
-              className='form-control'
+              className="form-control"
               id="phone"
               name="phone"
               placeholder="Enter your phone number"
@@ -129,10 +158,12 @@ export default function RegisterPage() {
             )}
           </div>
           <div>
-            <label htmlFor="email" className='form-label'>Email</label>
+            <label htmlFor="email" className="form-label">
+              Email
+            </label>
             <input
               type="email"
-              className='form-control'
+              className="form-control"
               id="email"
               name="email"
               placeholder="Enter your email"
@@ -143,12 +174,15 @@ export default function RegisterPage() {
             {formError.email && (
               <div className="error-feedback">{formError.email}</div>
             )}
+            {errorEmail && <div className="error-feedback">{errorEmail}</div>}
           </div>
           <div>
-            <label htmlFor="password" className='form-label'>Password</label>
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
             <input
               type="password"
-              className='form-control'
+              className="form-control"
               id="password"
               name="password"
               placeholder="Enter your password"
@@ -161,10 +195,12 @@ export default function RegisterPage() {
             )}
           </div>
           <div>
-            <label htmlFor="confirmPassword" className='form-label'>Confirm Password</label>
+            <label htmlFor="confirmPassword" className="form-label">
+              Confirm Password
+            </label>
             <input
               type="password"
-              className='form-control'
+              className="form-control"
               id="confirmPassword"
               name="confirmPassword"
               placeholder="Confirm your password"
@@ -177,7 +213,9 @@ export default function RegisterPage() {
             )}
           </div>
           <div>
-            <p className="option-login">You have an account? <a href="/login">Login now</a></p>
+            <p className="option-login">
+              You have an account? <a href="/login">Login now</a>
+            </p>
           </div>
           <button type="submit">Register</button>
         </form>
