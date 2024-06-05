@@ -1,0 +1,12 @@
+.white-button {
+    border-radius: 20px;
+    width: 100px;
+    height: 40px;
+    border: 2px solid black;
+    margin-right: 30px;
+    margin-bottom: auto;
+}
+.white-button:hover{
+    background-color: #AD343E; 
+    color: white;
+}
