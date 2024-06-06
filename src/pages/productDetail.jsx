@@ -26,7 +26,7 @@ const ProductDetail = ({ productId }) => {
     <div className="container-fluid">
       {product && (
         <div className="main1">
-          <div className="image_dish">
+          <div className="image_dish_detail">
             <div className="col-lg-6 col-md-12 col-sm-12">
               <img
                 src={product.images.find(image => image.image_position === 1).image}
@@ -48,7 +48,7 @@ const ProductDetail = ({ productId }) => {
             </div>
             <div className="col-lg-6 col-md-12 col-sm-12">
               <div className="especialy">
-                <h2 className="dish_name">{product.name}</h2>
+                <h2 className="dish_name_detail">{product.name}</h2>
                 <div className="star">
                   {[...Array(5)].map((_, index) => (
                     <span
@@ -61,7 +61,7 @@ const ProductDetail = ({ productId }) => {
                   ))}
                 </div>
                 <p className="review">100 reviews</p>
-                <h2 className="price">{product.price}</h2>
+                <h2 className="price_detail">{product.price}</h2>
                 <p className="details">{product.describe_product}</p>
                 <button id="add-to-cart">Add to cart</button>
               </div>

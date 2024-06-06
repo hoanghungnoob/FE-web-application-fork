@@ -11,7 +11,7 @@
 
   }
   
-  .image_dish {
+  .image_dish_detail {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
@@ -24,7 +24,7 @@
     width: 100%;
   }
   
-  .dish_name {
+  .dish_name_detail {
     font-size: 30px;
   }
   
@@ -32,7 +32,7 @@
     font-size: 18px;
   }
   
-  .price {
+  .price_detail {
     font-size: 22px;
     font-weight: 700;
     display: grid;
