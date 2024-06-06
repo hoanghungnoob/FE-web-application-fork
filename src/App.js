@@ -9,6 +9,9 @@ import Footer from './components/Footer';
 import About from './pages/about';
 import Contact from './pages/contact';
 import Menu from './pages/menu';
+import Order from './pages/oder';
+import Cart from './pages/shoppingCart'
+import { ShoppingCart } from '@mui/icons-material';
 
 function App() {
   return (
@@ -22,6 +25,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/menu" element={<Menu />} />
+        <Route path="/order" element={<Order />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
       <Footer />
     </div>
