@@ -8,6 +8,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import About from './pages/about';
 import Contact from './pages/contact';
+import Menu from './pages/menu';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/menu" element={<Menu />} />
       </Routes>
       <Footer />
     </div>

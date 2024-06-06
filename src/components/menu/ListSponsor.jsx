@@ -1,4 +1,6 @@
 import React from "react";
+import Title from "../home/Title";
+
 function ListSponsor() {
     const SponsorArr = [
         { name : 'uber',
@@ -171,10 +173,14 @@ return (
     <div className="container" style={{ marginTop: '1em' }}>
       <div className="sp">
         <div className="row">
-          <div className="col-4" style={{ padding: '105px 95px 95px 85px' }}>
+          <div className="col-5" style={{ padding: '105px 95px 95px 85px' }}>
             {/* {createTitle("You can order through apps", "Lorem ipsum dolor sit amet consectetur adipiscing elit enim bibendum sed et aliquet aliquet risus tempor semper.", '', 'content-title-h2-menu', 'content-title-p1-menu')} */}
+            <Title title="You can order through apps" />
+            <p style={{marginTop: 30, fontFamily:"DM sans"}}>
+            Lorem ipsum dolor sit amet consectetur adipiscing elit enim bibendum sed et aliquet aliquet risus tempor semper.
+            </p>
           </div>
-          <div className="col-8 d-flex flex-column">
+          <div className="col-7 d-flex flex-column">
             <div className="row d-flex flex-row gap-4">
               <div className="col-3">
                 {createSponsor(SponsorArr[0])}

@@ -34,6 +34,14 @@ const ListProduct = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+  // nhấn thay đổi trạng thái tym
+  const toggleFavorite = (productId) => {
+    setProducts(prevProducts =>
+      prevProducts.map(product =>
+        product.id === productId ? { ...product, isFavorite: !product.isFavorite } : product
+      )
+    );
+  };
   console.log(products);
   return (
     <div className="container" style={{ marginTop: "2em" }}>
@@ -44,7 +52,12 @@ const ListProduct = () => {
                 <img src={product.images.find(image => true).image} className="card-img-top" alt="images" />)
             }
             <div className="card-body text-center">
-              <h5 className="card-title text-danger"> ${product.price} </h5>
+              <h5 className="card-title text-danger"> ${product.price} </h5> <button
+                onClick={() => toggleFavorite(product.id)}
+                className="btn btn-link heart-button"
+              >
+                <i className={`fas fa-heart ${product.isFavorite ? 'text-danger' : ''}`}></i>
+              </button>
               <h5 className="card-title">{product.name}</h5>
               <p className="card-text">{product.describe_product}</p>
               <button
