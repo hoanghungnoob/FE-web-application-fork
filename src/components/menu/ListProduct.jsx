@@ -47,9 +47,9 @@ const ListProduct = () => {
     <div className="container" style={{ marginTop: "2em" }}>
       <div className="row" style={{ gap: "2em" }}>
         {products.map((product) => (
-          <div key={product.id} className="card" style={{ width: "19rem" }}>
+          <div key={product.id} className="card card-menu" style={{ width: "19rem" }}>
             {product.images.length > 0 && (
-                <img src={product.images.find(image => true).image} className="card-img-top" alt="images" />)
+                <img src={product.images.find(image => true).image} className="card-img-top img-menu" alt="images" />)
             }
             <div className="card-body text-center">
               <h5 className="card-title text-danger"> ${product.price} </h5> <button
