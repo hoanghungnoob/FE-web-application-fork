@@ -54,14 +54,14 @@ const ListProduct = () => {
         {products.map((product) => (
           <div
             key={product.id}
-            className="card"
+            className="card card-menu"
             style={{ width: "19rem" }}
             onClick={() => handleProductClick(product.id)}
           >
             {product.images.length > 0 && (
               <img
                 src={product.images.find(image => true).image}
-                className="card-img-top"
+                className="card-img-top img-menu"
                 alt="images"
               />
             )}
