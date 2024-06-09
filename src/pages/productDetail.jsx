@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import '../assets/css/clients/productDetail.css';
 import ListComment from '../components/home/ListComment';
 import { fetchProduct } from '../api/productDetail.js';
-
-const ProductDetail = ({ productId }) => {
+import { useParams } from 'react-router-dom';
+const ProductDetail = () => {
+  const { productId } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -21,19 +22,20 @@ const ProductDetail = ({ productId }) => {
   const toggleStarColor = (star) => {
     star.style.color = star.style.color === 'orange' ? 'black' : 'orange';
   };
-
   return (
     <div className="container-fluid">
       {product && (
         <div className="main1">
           <div className="image_dish_detail">
             <div className="col-lg-6 col-md-12 col-sm-12">
-              <img
-                src={product.images.find(image => image.image_position === 1).image}
-                width="100%"
-                id="product-img"
-                alt={product.name}
-              />
+              {product.images.length > 0 && (
+                <img
+                  src={product.images.find(image => image.image_position === 1).image}
+                  width="100%"
+                  id="product-img"
+                  alt={product.name}
+                />
+              )}
               <div className="small-images" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {product.images.slice(1).map(image => (
                   <img
@@ -72,6 +74,7 @@ const ProductDetail = ({ productId }) => {
       <ListComment />
     </div>
   );
+  
 };
 
 export default ProductDetail;

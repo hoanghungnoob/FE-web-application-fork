@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import About from './pages/about';
 import Contact from './pages/contact';
 import ProductDetail from './pages/productDetail';
+import Menu from './pages/menu';
 import Order from './pages/oder';
 import Cart from './pages/shoppingCart'
 import { ShoppingCart } from '@mui/icons-material';
@@ -23,8 +24,9 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/about" element={<About />} />
-        <Route path="/detail" element={<ProductDetail />} />
+        <Route path="/detail/:productId" element={<ProductDetail />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/menu" element={<Menu />} />
         <Route path="/order" element={<Order />} />
         <Route path="/cart" element={<Cart />} />
       </Routes>
