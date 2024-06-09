@@ -44,9 +44,10 @@ const ListProduct = () => {
     );
   };
 
-  const handleProductClick = (productId) => {
-    navigate(`/detail/${productId}`);
+  const handleProductClick = (product) => {
+    navigate(`/menu/${encodeURIComponent(product.name)}`, { state: { product } });
   };
+  
 
   return (
     <div className="container" style={{ marginTop: "2em" }}>
@@ -56,7 +57,7 @@ const ListProduct = () => {
             key={product.id}
             className="card card-menu"
             style={{ width: "19rem" }}
-            onClick={() => handleProductClick(product.id)}
+            onClick={() => handleProductClick(product)}
           >
             {product.images.length > 0 && (
               <img
