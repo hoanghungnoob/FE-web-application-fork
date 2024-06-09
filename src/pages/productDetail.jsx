@@ -13,7 +13,7 @@ const ProductDetail = () => {
     star.style.color = star.style.color === 'orange' ? 'black' : 'orange';
   };
   return (
-    <div className="container-fluid">
+    <div className="container">
       {product && (
         <div className="main1">
           <div className="image_dish_detail">
@@ -21,7 +21,6 @@ const ProductDetail = () => {
               {product.images.length > 0 && (
                 <img
                   src={product.images.find(image => image.image_position === 1).image}
-                  width="100%"
                   id="product-img"
                   alt={product.name}
                 />
@@ -31,8 +30,6 @@ const ProductDetail = () => {
                   <img
                     key={image.id}
                     src={image.image}
-                    width="32.33%"
-                    height="100px"
                     alt={product.name}
                   />
                 ))}
