@@ -1,67 +1,119 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import ButtonWhite from "../components/buttonWhite/ButtonWhite";
 import "../assets/css/shoppingCart.css";
-
-const Cart = [
-  {
-    id: 1,
-    name: "Product 1",
-    description: "This is the first product",
-    price: 10,
-    image:
-      "https://images.squarespace-cdn.com/content/v1/53883795e4b016c956b8d243/1551438228969-H0FPV1FO3W5B0QL328AS/chup-anh-thuc-an-1.jpg",
-    quantity: 1,
-  },
-  {
-    id: 2,
-    name: "Product 2",
-    description: "This is the second product",
-    price: 20,
-    image:
-      "https://assets.tronhouse.vn/59185068-4c44-404a-a5b6-493d1d50d13d/origin/chup-anh-mon-an-4.jpeg",
-    quantity: 1,
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    description: "This is the third product",
-    price: 30,
-    image:
-      "https://lavenderstudio.com.vn/wp-content/uploads/2017/03/chup-san-pham.jpg",
-    quantity: 1,
-  },
-];
+import { jwtDecode } from "jwt-decode";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ShoppingCart() {
-  const [cart, setCart] = useState(Cart);
+  const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const accountData = JSON.parse(sessionStorage.getItem("account"));
+        const token = accountData ? accountData.token : null;
+
+        if (token) {
+          const decodedToken = jwtDecode(token);
+          const userId = decodedToken.id;
+          const response = await axios.post(
+            "http://127.0.0.1:8000/api/user/cart",
+            {
+              id: userId,
+            }
+          );
+          setCart(response.data.success);
+        } else {
+          setError("No token found. Please login first.");
+        }
+      } catch (err) {
+        console.error("Error fetching cart data:", err);
+        setError("Failed to fetch cart data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCart();
+  }, []);
+
+  const updateCartQuantity = async (cartId, newQuantity) => {
+    try {
+      await axios.put(`http://127.0.0.1:8000/api/user/cart/${cartId}`, {
+        product_quantity: newQuantity,
+      });
+    } catch (error) {
+      console.error("Error updating cart data:", error);
+    }
+  };
+
+  const deleteCartItem = async (cartId) => {
+    try {
+      await axios.delete(`http://127.0.0.1:8000/api/user/cart/${cartId}`);
+      setCart((prevCart) => prevCart.filter((item) => item.id !== cartId));
+      toast.success("Product removed successfully");
+    } catch (error) {
+      console.error("Error deleting cart item:", error);
+      toast.error("Failed to remove item");
+    }
+  };
 
   const increaseQuantity = (productId) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
+    setCart((prevCart) => {
+      const updatedCart = prevCart.map((item) =>
+        item.product_id === productId
+          ? { ...item, product_quantity: item.product_quantity + 1 }
+          : item
+      );
+
+      const updatedItem = updatedCart.find(
+        (item) => item.product_id === productId
+      );
+      updateCartQuantity(updatedItem.id, updatedItem.product_quantity);
+
+      return updatedCart;
+    });
   };
 
   const decreaseQuantity = (productId) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === productId && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
+    setCart((prevCart) => {
+      const updatedCart = prevCart.map((item) =>
+        item.product_id === productId && item.product_quantity > 1
+          ? { ...item, product_quantity: item.product_quantity - 1 }
           : item
-      )
-    );
+      );
+
+      const updatedItem = updatedCart.find(
+        (item) => item.product_id === productId
+      );
+      if (updatedItem.product_quantity > 0) {
+        updateCartQuantity(updatedItem.id, updatedItem.product_quantity);
+      }
+      return updatedCart;
+    });
   };
 
   const totalShoppingCart = () => {
     return cart
       .reduce(
         (total, shoppingCart) =>
-          total + shoppingCart.price * shoppingCart.quantity,
+          total + shoppingCart.price * shoppingCart.product_quantity,
         0
       )
       .toFixed(2);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className="shoppingCart-page-container">
@@ -76,31 +128,36 @@ function ShoppingCart() {
         </div>
       </div>
       <div className="shoppingCart-detail">
+      <ToastContainer />
         {cart.map((product) => (
-          <div className="cart-item" key={product.id}>
+          <div className="cart-item" key={product.product_id}>
             <input type="checkbox" name="selectedProduct" />
-            <img src={product.image} alt={product.name} />
+            {product.images.length > 0 && (
+              <img src={product.images[0]} alt={product.product_name} />
+            )}
             <div className="product-details">
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
+              <h3>{product.product_name}</h3>
+              <p>{product.description}</p> {/* Display description */}
               <p>Price: ${product.price}</p>
               <div className="quantity-control">
                 <button
                   className="circle"
-                  onClick={() => decreaseQuantity(product.id)}
+                  onClick={() => decreaseQuantity(product.product_id)}
                 >
                   -
                 </button>
-                <div className="quantity">{product.quantity}</div>
+                <div className="quantity">{product.product_quantity}</div>
                 <button
                   className="circle"
-                  onClick={() => increaseQuantity(product.id)}
+                  onClick={() => increaseQuantity(product.product_id)}
                 >
                   +
                 </button>
               </div>
-              <div className="button-cart-remove ">
-                <ButtonWhite children="Remove" />
+              <div className="button-cart-remove">
+                <button onClick={() => deleteCartItem(product.id)} className="btn btn-danger">
+                  Remove
+                </button>
               </div>
             </div>
           </div>
