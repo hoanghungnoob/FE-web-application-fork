@@ -3,6 +3,8 @@ import axios from "axios";
 import ButtonWhite from "../components/buttonWhite/ButtonWhite";
 import "../assets/css/shoppingCart.css";
 import { jwtDecode } from "jwt-decode";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ShoppingCart() {
   const [cart, setCart] = useState([]);
@@ -53,8 +55,10 @@ function ShoppingCart() {
     try {
       await axios.delete(`http://127.0.0.1:8000/api/user/cart/${cartId}`);
       setCart((prevCart) => prevCart.filter((item) => item.id !== cartId));
+      toast.success("Product removed successfully");
     } catch (error) {
-      console.error("Error updating cart data:", error);
+      console.error("Error deleting cart item:", error);
+      toast.error("Failed to remove item");
     }
   };
 
@@ -124,6 +128,7 @@ function ShoppingCart() {
         </div>
       </div>
       <div className="shoppingCart-detail">
+      <ToastContainer />
         {cart.map((product) => (
           <div className="cart-item" key={product.product_id}>
             <input type="checkbox" name="selectedProduct" />
@@ -150,10 +155,9 @@ function ShoppingCart() {
                 </button>
               </div>
               <div className="button-cart-remove">
-                <ButtonWhite 
-                children="Remove" 
-                onClick={() => deleteCartItem(product.product_id)}
-                />
+                <button onClick={() => deleteCartItem(product.id)} className="btn btn-danger">
+                  Remove
+                </button>
               </div>
             </div>
           </div>

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "../menu/ListProduct.css";
-const addToCart = (dish_id, src, h1Cost, h1Title, infor) => {
-  // Code to add item to cart
-};
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,6 +29,33 @@ const ListProduct = () => {
     fetchProducts();
   }, []);
 
+  const addToCart = async (productId) => {
+    const accountData = JSON.parse(sessionStorage.getItem("account"));
+    const token = accountData ? accountData.token : null;
+
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.id;
+      await axios.post(
+        "http://127.0.0.1:8000/api/user/cart/add",
+        {
+          product_id: productId,
+          user_id: userId,
+          product_quantity: 1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Product add successfully");
+    } else {
+      setError("No token found. Please login first.");
+      toast.error("Failed to add item");
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -36,32 +65,46 @@ const ListProduct = () => {
   }
   // nhấn thay đổi trạng thái tym
   const toggleFavorite = (productId) => {
-    setProducts(prevProducts =>
-      prevProducts.map(product =>
-        product.id === productId ? { ...product, isFavorite: !product.isFavorite } : product
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === productId
+          ? { ...product, isFavorite: !product.isFavorite }
+          : product
       )
     );
   };
-  console.log(products);
+  
   return (
     <div className="container" style={{ marginTop: "2em" }}>
+      <ToastContainer />
       <div className="row" style={{ gap: "2em" }}>
         {products.map((product) => (
-          <div key={product.id} className="card card-menu" style={{ width: "19rem" }}>
+          <div
+            key={product.id}
+            className="card card-menu"
+            style={{ width: "19rem" }}
+          >
             {product.images.length > 0 && (
-                <img src={product.images.find(image => true).image} className="card-img-top img-menu" alt="images" />)
-            }
+              <img
+                src={product.images.find((image) => true).image}
+                className="card-img-top img-menu"
+                alt="images"
+              />
+            )}
             <div className="card-body text-center">
-              <h5 className="card-title text-danger"> ${product.price} </h5> <button
+              <h5 className="card-title text-danger"> ${product.price} </h5>{" "}
+              <button
                 onClick={() => toggleFavorite(product.id)}
                 className="btn btn-link heart-button"
               >
-                <i className={`fas fa-heart ${product.isFavorite ? 'text-danger' : ''}`}></i>
+                <i
+                  className={`fas fa-heart ${product.isFavorite ? "text-danger" : ""}`}
+                ></i>
               </button>
               <h5 className="card-title">{product.name}</h5>
               <p className="card-text">{product.describe_product}</p>
               <button
-                onClick={() => addToCart()}
+                onClick={() => addToCart(product.id)}
                 className="btn btn-primary add-to-cart-btn"
               >
                 ADD TO CART
