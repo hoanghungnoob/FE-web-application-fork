@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ButtonWhite from "../components/buttonWhite/ButtonWhite";
 import "../assets/css/shoppingCart.css";
-import {jwtDecode} from 'jwt-decode';
+import {jwtDecode} from "jwt-decode";
 
 function ShoppingCart() {
   const [cart, setCart] = useState([]);
@@ -18,9 +18,12 @@ function ShoppingCart() {
         if (token) {
           const decodedToken = jwtDecode(token);
           const userId = decodedToken.id;
-          const response = await axios.post("http://127.0.0.1:8000/api/user/cart", {
-            id: userId
-          });
+          const response = await axios.post(
+            "http://127.0.0.1:8000/api/user/cart",
+            {
+              id: userId,
+            }
+          );
           setCart(response.data.success);
         } else {
           setError("No token found. Please login first.");
@@ -39,7 +42,9 @@ function ShoppingCart() {
   const increaseQuantity = (productId) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
-        item.product_id === productId ? { ...item, product_quantity: item.product_quantity + 1 } : item
+        item.product_id === productId
+          ? { ...item, product_quantity: item.product_quantity + 1 }
+          : item
       )
     );
   };
@@ -93,6 +98,7 @@ function ShoppingCart() {
             )}
             <div className="product-details">
               <h3>{product.product_name}</h3>
+              <p>{product.description}</p> {/* Display description */}
               <p>Price: ${product.price}</p>
               <div className="quantity-control">
                 <button
