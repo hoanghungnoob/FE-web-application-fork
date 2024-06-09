@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ButtonWhite from "../components/buttonWhite/ButtonWhite";
 import "../assets/css/shoppingCart.css";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 function ShoppingCart() {
   const [cart, setCart] = useState([]);
@@ -39,24 +39,58 @@ function ShoppingCart() {
     fetchCart();
   }, []);
 
+  const updateCartQuantity = async (cartId, newQuantity) => {
+    try {
+      await axios.put(`http://127.0.0.1:8000/api/user/cart/${cartId}`, {
+        product_quantity: newQuantity,
+      });
+    } catch (error) {
+      console.error("Error updating cart data:", error);
+    }
+  };
+
+  const deleteCartItem = async (cartId) => {
+    try {
+      await axios.delete(`http://127.0.0.1:8000/api/user/cart/${cartId}`);
+      setCart((prevCart) => prevCart.filter((item) => item.id !== cartId));
+    } catch (error) {
+      console.error("Error updating cart data:", error);
+    }
+  };
+
   const increaseQuantity = (productId) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
+    setCart((prevCart) => {
+      const updatedCart = prevCart.map((item) =>
         item.product_id === productId
           ? { ...item, product_quantity: item.product_quantity + 1 }
           : item
-      )
-    );
+      );
+
+      const updatedItem = updatedCart.find(
+        (item) => item.product_id === productId
+      );
+      updateCartQuantity(updatedItem.id, updatedItem.product_quantity);
+
+      return updatedCart;
+    });
   };
 
   const decreaseQuantity = (productId) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
+    setCart((prevCart) => {
+      const updatedCart = prevCart.map((item) =>
         item.product_id === productId && item.product_quantity > 1
           ? { ...item, product_quantity: item.product_quantity - 1 }
           : item
-      )
-    );
+      );
+
+      const updatedItem = updatedCart.find(
+        (item) => item.product_id === productId
+      );
+      if (updatedItem.product_quantity > 0) {
+        updateCartQuantity(updatedItem.id, updatedItem.product_quantity);
+      }
+      return updatedCart;
+    });
   };
 
   const totalShoppingCart = () => {
@@ -116,7 +150,10 @@ function ShoppingCart() {
                 </button>
               </div>
               <div className="button-cart-remove">
-                <ButtonWhite children="Remove" />
+                <ButtonWhite 
+                children="Remove" 
+                onClick={() => deleteCartItem(product.product_id)}
+                />
               </div>
             </div>
           </div>
