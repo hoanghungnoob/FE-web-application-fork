@@ -1,23 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import '../assets/css/clients/productDetail.css';
 import ListComment from '../components/home/ListComment';
-import { fetchProduct } from '../api/productDetail.js';
-import { useParams } from 'react-router-dom';
 const ProductDetail = () => {
-  const { productId } = useParams();
-  const [product, setProduct] = useState(null);
-
+  const { name } = useParams();
+  const { state } = useLocation();
+  const [product, setProduct] = useState(state?.product || null);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const productData = await fetchProduct(productId);
-        setProduct(productData);
-      } catch (error) {
-        console.error('Error fetching product:', error);
-      }
-    };
-    fetchData();
-  }, [productId]);
+  }, [name]);
 
   const toggleStarColor = (star) => {
     star.style.color = star.style.color === 'orange' ? 'black' : 'orange';
