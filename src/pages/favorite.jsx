@@ -44,25 +44,30 @@ const ProductList = () => {
   return (
     <div>
       <h2 className="textProduct text-center">Favorite product</h2>
-      {products.map((product) => (
-        <div className="cart-product" key={product.id}>
-          <div className="item-image">
-            <img src={product.image} alt="Product" />
-          </div>
-          <div className="item-details">
-            <h3 className="item-name">{product.name}</h3>
-            <p className="item-description">{product.describe_product}</p>
-            <div className="item-pricing">
-              <div className="item-price">${product.sell_price}</div>
-              <button onClick={() => handleDelete(product.id)}> 
-                <i className="fas fa-trash"></i> 
-              </button>
+      {!Array.isArray(products) || products.length === 0 ? (
+        <p className="text-center">There are no favorite products.</p>
+      ) : (
+        products.map((product) => (
+          <div className="cart-product" key={product.id}>
+            <div className="item-image">
+              <img src={product.images} alt="Product" />
+            </div>
+            <div className="item-details">
+              <h3 className="item-name">{product.name}</h3>
+              <p className="item-description">{product.describe_product}</p>
+              <div className="item-pricing">
+                <div className="item-price">{product.price}</div>
+                <button onClick={() => handleDelete(product.id)}> 
+                  <i className="fas fa-trash"></i> 
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
+  
 };
 
 export default ProductList;
