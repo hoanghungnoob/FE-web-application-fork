@@ -54,7 +54,7 @@ const ListProduct = () => {
       toast.success("Product add successfully");
     } else {
       setError("No token found. Please login first.");
-      toast.error("Failed to add item");
+      toast.error("You must login before adding to cart");
     }
   };
 
@@ -62,9 +62,9 @@ const ListProduct = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
 
   // Nhấn để thay đổi trạng thái tim
   const toggleFavorite = (productId) => {
