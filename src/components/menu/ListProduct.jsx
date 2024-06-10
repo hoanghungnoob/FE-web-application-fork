@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../menu/ListProduct.css";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const ListProduct = () => {
@@ -27,6 +31,33 @@ const ListProduct = () => {
     fetchProducts();
   }, []);
 
+  const addToCart = async (productId) => {
+    const accountData = JSON.parse(sessionStorage.getItem("account"));
+    const token = accountData ? accountData.token : null;
+
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.id;
+      await axios.post(
+        "http://127.0.0.1:8000/api/user/cart/add",
+        {
+          product_id: productId,
+          user_id: userId,
+          product_quantity: 1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Product add successfully");
+    } else {
+      setError("No token found. Please login first.");
+      toast.error("Failed to add item");
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -37,26 +68,31 @@ const ListProduct = () => {
 
   // Nhấn để thay đổi trạng thái tim
   const toggleFavorite = (productId) => {
-    setProducts(prevProducts =>
-      prevProducts.map(product =>
-        product.id === productId ? { ...product, isFavorite: !product.isFavorite } : product
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === productId
+          ? { ...product, isFavorite: !product.isFavorite }
+          : product
       )
     );
   };
+  
 
-  const handleProductClick = (productId) => {
-    navigate(`/detail/${productId}`);
+  const handleProductClick = (product) => {
+    navigate(`/menu/${encodeURIComponent(product.name)}`, { state: { product } });
   };
+  
 
   return (
     <div className="container" style={{ marginTop: "2em" }}>
+      <ToastContainer />
       <div className="row" style={{ gap: "2em" }}>
         {products.map((product) => (
           <div
             key={product.id}
             className="card card-menu"
             style={{ width: "19rem" }}
-            onClick={() => handleProductClick(product.id)}
+            onClick={() => handleProductClick(product)}
           >
             {product.images.length > 0 && (
               <img
@@ -83,7 +119,7 @@ const ListProduct = () => {
               <button
                 onClick={(e) => {
                   e.stopPropagation(); // Ngăn chặn sự kiện click trên card
-                  addToCart(product.id, product.images[0].image, product.price, product.name, product.describe_product);
+                  addToCart(product.id);
                 }}
                 className="btn btn-primary add-to-cart-btn"
               >
@@ -95,10 +131,6 @@ const ListProduct = () => {
       </div>
     </div>
   );
-};
-
-const addToCart = (dish_id, src, h1Cost, h1Title, infor) => {
-  // Code to add item to cart
 };
 
 export default ListProduct;
