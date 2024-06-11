@@ -36,7 +36,7 @@ const InformationSection = ({ information, cards }) => {
           </div>
           <div className="col-6">
             <div className="information-right">
-              <img src="https://studiovietnam.com/wp-content/uploads/2022/03/hinh-anh-ve-do-an-20.jpg" />
+              <img src="https://studiovietnam.com/wp-content/uploads/2022/03/hinh-anh-ve-do-an-20.jpg" alt='image_information' />
             </div>
           </div>
         </div>
