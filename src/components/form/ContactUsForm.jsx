@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Send } from "../../components/button/Button.stories";
-import { Form, Input, message } from "antd";
+import { Form, Input } from "antd";
 import axios from "axios";
 const { TextArea } = Input;
 
@@ -10,6 +10,7 @@ const onFinish = async (values) => {
       "http://127.0.0.1:8000/api/admin/contact/create",
       values
     );
+    console.log(response);
     alert("Your contact information has been sent!");
   } catch (error) {
     console.error("Error occurred while submitting form:", error);

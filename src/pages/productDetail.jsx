@@ -10,11 +10,9 @@ const ProductDetail = () => {
   const { name } = useParams();
   const { state } = useLocation();
   const [error, setError] = useState(null);
-  const [favoriteStatus, setFavoriteStatus] = useState({});
   const [product, setProduct] = useState(state?.product || null);
   useEffect(() => {
   }, [name]);
-
   const toggleStarColor = (star) => {
     star.style.color = star.style.color === 'orange' ? 'black' : 'orange';
   };
@@ -44,42 +42,12 @@ const ProductDetail = () => {
       toast.error("Failed to add item");
     }
   };
-  const addToWishlist = async (productId) => {
-    const accountData = JSON.parse(sessionStorage.getItem("account"));
-    const token = accountData ? accountData.token : null;
 
-    if (!token) {
-      toast.error("Please log in first.");
-      return;
-    }
-
-    try {
-      const decodedToken = jwtDecode(token);
-      const userId = decodedToken.id;
-      await axios.post(
-        "http://127.0.0.1:8000/api/user/wishlist",
-        {
-          product_id: productId,
-          user_id: userId
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast.success("Product added to wishlist successfully");
-
-      // Cập nhật trạng thái yêu thích của sản phẩm
-      const updatedFavoriteStatus = { ...favoriteStatus, [productId]: true };
-      setFavoriteStatus(updatedFavoriteStatus);
-    } catch (error) {
-      toast.error("Failed to add item to wishlist");
-    }
-  };
+  console.log(error);
+  console.log(setProduct);
   return (
     <div className="container">
-    <ToastContainer />
+      <ToastContainer />
       {product && (
         <div className="main1">
           <div className="image_dish_detail">
@@ -129,7 +97,7 @@ const ProductDetail = () => {
       <ListComment />
     </div>
   );
-  
+
 };
 
 export default ProductDetail;
