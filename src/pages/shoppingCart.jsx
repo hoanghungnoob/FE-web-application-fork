@@ -131,7 +131,10 @@ function ShoppingCart() {
       toast.error("Failed to update product status");
     }
   };
-
+  // save to localstorage
+  const saveSelectedProductsToLocal = (selectedProducts) => {
+    localStorage.setItem("selectedProducts", JSON.stringify(selectedProducts));
+  };
   const handleCheckout = () => {
   // Kiểm tra xem có sản phẩm nào được chọn không
   const selectedProducts = cart.filter((product) => product.status === 0);
@@ -140,6 +143,7 @@ function ShoppingCart() {
     toast.error("Please select at least one product to checkout.");
   } else {
     // Nếu có sản phẩm được chọn, chuyển hướng sang trang đặt hàng
+    saveSelectedProductsToLocal(selectedProducts);
     navigate("../order");
   }
 };
