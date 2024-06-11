@@ -13,7 +13,7 @@ const ListProduct = () => {
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [favoriteStatus, setFavoriteStatus] = useState({});
   const navigate = useNavigate();
-
+console.log(favoriteProducts);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
