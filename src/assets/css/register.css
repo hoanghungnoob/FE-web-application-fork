@@ -1,4 +1,3 @@
-/* register.css */
 .register-page {
   display: flex;
   flex-direction: column;
@@ -41,7 +40,7 @@
   width: 100%;
 }
 
-button {
+.button-register {
   display: flex;
   justify-content: center;
   align-items: center;
