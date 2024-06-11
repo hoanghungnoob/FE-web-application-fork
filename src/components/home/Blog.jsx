@@ -12,7 +12,7 @@ import { data } from "autoprefixer";
 function Blog() {
   return (
     <div className="container-blog pt-5">
-      <div className="flex justify-around">
+      <div className="flex justify-content-around">
         <Title title="Our Blog & Articles" />
         <ReadAllArticles />
       </div>
