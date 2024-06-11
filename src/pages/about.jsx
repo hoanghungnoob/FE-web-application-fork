@@ -22,7 +22,7 @@ function App() {
   return (
     <div>
       <ComeAndVisit image={aboutImage} title="About Us" isContactPage={false} />
-      <div className="video-container">
+      <div className="ABvideo-container">
         <video className="about-video" autoPlay loop muted>
           <source src={VideoAbout} type="video/mp4" />
         </video>
