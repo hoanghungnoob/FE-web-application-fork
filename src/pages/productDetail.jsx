@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import '../assets/css/clients/productDetail.css';
 import ListComment from '../components/home/ListComment';
 const ProductDetail = () => {
   const { name } = useParams();
   const { state } = useLocation();
+  const [error, setError] = useState(null);
+  const [favoriteStatus, setFavoriteStatus] = useState({});
   const [product, setProduct] = useState(state?.product || null);
   useEffect(() => {
   }, [name]);
@@ -12,8 +18,68 @@ const ProductDetail = () => {
   const toggleStarColor = (star) => {
     star.style.color = star.style.color === 'orange' ? 'black' : 'orange';
   };
+  const addToCart = async (productId) => {
+    const accountData = JSON.parse(sessionStorage.getItem("account"));
+    const token = accountData ? accountData.token : null;
+
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.id;
+      await axios.post(
+        "http://127.0.0.1:8000/api/user/cart/add",
+        {
+          product_id: productId,
+          user_id: userId,
+          product_quantity: 1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Product add successfully");
+    } else {
+      setError("No token found. Please login first.");
+      toast.error("Failed to add item");
+    }
+  };
+  const addToWishlist = async (productId) => {
+    const accountData = JSON.parse(sessionStorage.getItem("account"));
+    const token = accountData ? accountData.token : null;
+
+    if (!token) {
+      toast.error("Please log in first.");
+      return;
+    }
+
+    try {
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.id;
+      await axios.post(
+        "http://127.0.0.1:8000/api/user/wishlist",
+        {
+          product_id: productId,
+          user_id: userId
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Product added to wishlist successfully");
+
+      // Cập nhật trạng thái yêu thích của sản phẩm
+      const updatedFavoriteStatus = { ...favoriteStatus, [productId]: true };
+      setFavoriteStatus(updatedFavoriteStatus);
+    } catch (error) {
+      toast.error("Failed to add item to wishlist");
+    }
+  };
   return (
     <div className="container">
+    <ToastContainer />
       {product && (
         <div className="main1">
           <div className="image_dish_detail">
@@ -52,7 +118,9 @@ const ProductDetail = () => {
                 <p className="review">100 reviews</p>
                 <h2 className="price_detail">{product.price}</h2>
                 <p className="details">{product.describe_product}</p>
-                <button id="add-to-cart">Add to cart</button>
+                <button id="add-to-cart" onClick={(e) => {
+                  addToCart(product.id);
+                }}>Add to cart</button>
               </div>
             </div>
           </div>
