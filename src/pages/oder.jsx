@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/css/order.css";
+import { jwtDecode } from "jwt-decode";
 
 function Order() {
+  
   const [formOrder, setFormOrder] = useState({
     userName: "",
     email: "",
@@ -9,6 +11,19 @@ function Order() {
     address: "",
     paymentMethod: "Cash On Delivery",
   });
+  useEffect(()=>{
+    const accountData = JSON.parse(sessionStorage.getItem("account"));
+    const token = accountData ? accountData.token : null;
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setFormOrder({
+        ...formOrder,
+        userName:decodedToken.name,
+        email:decodedToken.email,
+        phoneNumber:decodedToken.phone_number,
+      });
+    }
+  },[formOrder])
 
   const [showMore, setShowMore] = useState(false);
 

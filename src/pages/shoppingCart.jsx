@@ -28,7 +28,9 @@ function ShoppingCart() {
               id: userId,
             }
           );
-          setCart(response.data.success);
+          // setCart(response.data.success);
+          const sortedCart = response.data.success.sort((a, b) => a.status - b.status);
+          setCart(sortedCart);
         } else {
           setError("No token found. Please login first.");
         }
@@ -117,7 +119,7 @@ function ShoppingCart() {
       setCart((prevCart) =>
         prevCart.map((item) =>
           item.id === cartId
-            ? { ...item, status: isSelected ? 1 : 0, selected: isSelected }
+            ? { ...item, status: isSelected ? 1 : 0 }
             : item
         )
       );
@@ -131,9 +133,17 @@ function ShoppingCart() {
   };
 
   const handleCheckout = () => {
-    alert("checkout");
+  // Kiểm tra xem có sản phẩm nào được chọn không
+  const selectedProducts = cart.filter((product) => product.status === 0);
+  if (selectedProducts.length === 0) {
+    // Nếu không có sản phẩm được chọn, hiển thị thông báo
+    toast.error("Please select at least one product to checkout.");
+  } else {
+    // Nếu có sản phẩm được chọn, chuyển hướng sang trang đặt hàng
     navigate("../order");
-  };
+  }
+};
+
 
   if (loading) {
     return <div>Loading...</div>;
@@ -142,7 +152,9 @@ function ShoppingCart() {
   if (error) {
     return <div>Error: {error}</div>;
   }
+  
   console.log("giá trị cart", cart);
+
   return (
     <div className="shoppingCart-page-container">
       <div className="total-checkout">
