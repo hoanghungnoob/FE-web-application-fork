@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row } from "antd";
+import {  Row } from "antd";
 import iconmenubreakfast from "../../assets/images/iconmenubreakfast.png";
 import iconmenumaindish from "../../assets/images/iconmenumaindish.png";
 import iconmenudrinks from "../../assets/images/iconmenudrinks.png";

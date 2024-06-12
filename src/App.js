@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import User from './pages/home';
 import Login from './pages/login';
 import { Routes, Route } from "react-router-dom";
-import axios from 'axios';
 import RegisterPage from './pages/register';
 import Header from './components/Header';
 import Footer from './components/Footer';
