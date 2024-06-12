@@ -39,7 +39,7 @@ const ProductDetail = () => {
       toast.success("Product add successfully");
     } else {
       setError("No token found. Please login first.");
-      toast.error("Failed to add item");
+      toast.error("You need to log in before registering");
     }
   };
 
