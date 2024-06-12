@@ -123,12 +123,8 @@ function ShoppingCart() {
             : item
         )
       );
-      toast.success(
-        `Product ${isSelected ? "selected" : "unselected"} successfully`
-      );
     } catch (error) {
       console.error("Error updating product status:", error);
-      toast.error("Failed to update product status");
     }
   };
   // save to localstorage
@@ -136,13 +132,11 @@ function ShoppingCart() {
     localStorage.setItem("selectedProducts", JSON.stringify(selectedProducts));
   };
   const handleCheckout = () => {
-  // Kiểm tra xem có sản phẩm nào được chọn không
   const selectedProducts = cart.filter((product) => product.status === 0);
   if (selectedProducts.length === 0) {
-    // Nếu không có sản phẩm được chọn, hiển thị thông báo
     toast.error("Please select at least one product to checkout.");
   } else {
-    // Nếu có sản phẩm được chọn, chuyển hướng sang trang đặt hàng
+    // navigate to order page
     saveSelectedProductsToLocal(selectedProducts);
     navigate("../order");
   }

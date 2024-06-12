@@ -3,12 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function Success() {
     const navigate = useNavigate();
-    const handlePage= () =>{
-        
-            navigate('/menu');
-        
-    }
-
     return (
         <div>
     <div className="bg-gray-100 h-screen">
@@ -23,10 +17,10 @@ export default function Success() {
             <p class="text-gray-600 my-2">Thank you for completing your secure online payment.</p>
             <p> Have a great day!  </p>
             <div class="py-10 text-center">
-                <button onClick={handlePage} className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3">
+                <button onClick={()=> navigate('/menu')} className="rounded w-25 px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3">
                     Countinue Order
-               </button>
-               <button  onClick={()=> navigate('/home')} className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3">
+               </button><br></br><br></br>
+               <button  onClick={()=> navigate('/home')} className="rounded w-25 px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3">
                     Home
                </button>
             </div>
