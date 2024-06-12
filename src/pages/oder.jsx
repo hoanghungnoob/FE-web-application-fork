@@ -1,29 +1,33 @@
 import React, { useEffect, useState } from "react";
 import "../assets/css/order.css";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Order() {
-  
   const [formOrder, setFormOrder] = useState({
     userName: "",
     email: "",
     phoneNumber: "",
     address: "",
     paymentMethod: "Cash On Delivery",
+    user_id: "",
   });
-  useEffect(()=>{
+  useEffect(() => {
     const accountData = JSON.parse(sessionStorage.getItem("account"));
     const token = accountData ? accountData.token : null;
     if (token) {
       const decodedToken = jwtDecode(token);
       setFormOrder({
         ...formOrder,
-        userName:decodedToken.name,
-        email:decodedToken.email,
-        phoneNumber:decodedToken.phone_number,
+        userName: decodedToken.name,
+        email: decodedToken.email,
+        phoneNumber: decodedToken.phone_number,
+        user_id: decodedToken.id,
       });
+      // console.log("dữ liệu form",formOrder)
     }
-  },[formOrder])
+  }, [formOrder]);
 
   const [showMore, setShowMore] = useState(false);
 
@@ -31,11 +35,14 @@ function Order() {
     const storedProducts = JSON.parse(localStorage.getItem("selectedProducts"));
     if (storedProducts) {
       setProducts(storedProducts);
-      console.log("Số lượng sản phẩm trong localStorage:", storedProducts.length);
+      console.log(
+        "Số lượng sản phẩm trong localStorage:",
+        storedProducts.length
+      );
       console.log("sản phẩm trong localStorage:", storedProducts);
     }
   }, []);
-  
+
   const [products, setProducts] = useState([]);
 
   const handleChange = (e) => {
@@ -50,13 +57,59 @@ function Order() {
   //   e.preventDefault();
   //   console.log("Order submitted", formOrder);
   // };
+  // const handleSubmit = async (formOrder) => {
+  //   try {
+  //     const res = await axios.post(`http://127.0.0.1:8000/api/admin/orders`, {
+  //       name: formOrder.name,
+  //       phone_number: formOrder.phone_number,
+  //       address: formOrder.address,
+  //       payment_method: formOrder.payment_method,
+  //       total_price: calculateTotal(),
+  //       user_id: formOrder.id,
+  //     });
+  //     console.log(res);
+  //     navigate('/success');
+  //   } catch (error) {
+  //     console.error("Error order", error);
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const accountData = JSON.parse(sessionStorage.getItem("account"));
+    const token = accountData ? accountData.token : null;
+    if (!token) {
+      console.error('Token not found');
+      return;
+    }
+    // const decodedToken = jwtDecode(token);
+
+    const orderData = {
+      name: formOrder.userName,
+      phone_number: formOrder.phoneNumber,
+      address: formOrder.address,
+      payment_method: formOrder.paymentMethod,
+      total_price: calculateTotal(),
+      user_id: formOrder.user_id
+    };
+
+    try {
+      const res = await axios.post(`http://127.0.0.1:8000/api/admin/orders`, orderData);
+      console.log(res);
+      navigate('/success');
+    } catch (error) {
+      console.error("Error order", error);
+    }
+  };
+  const navigate = useNavigate();
 
   const calculateTotal = () => {
-    return products.reduce((total, product) => {
-      return total + parseFloat(product.price) * product.product_quantity;
-    }, 0).toFixed(2);
+    return products
+      .reduce((total, product) => {
+        return total + parseFloat(product.price) * product.product_quantity;
+      }, 0)
+      .toFixed(2);
   };
-  
 
   const handleViewMore = () => {
     setShowMore(!showMore);
@@ -68,11 +121,11 @@ function Order() {
     <div className="order-page-container">
       <div className="order-user-information">
         <h4 className="order-title-shipping">Shipping Information</h4>
-        <form className="order-form-info"
-        //  onSubmit={handleSubmit}
-         >
+        <form className="order-form-info" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="userName" className="order-input-label">User Name</label>
+            <label htmlFor="userName" className="order-input-label">
+              User Name
+            </label>
             <input
               type="text"
               name="userName"
@@ -83,7 +136,9 @@ function Order() {
             />
           </div>
           <div>
-            <label htmlFor="email" className="order-input-label">Email</label>
+            <label htmlFor="email" className="order-input-label">
+              Email
+            </label>
             <input
               type="email"
               name="email"
@@ -94,7 +149,9 @@ function Order() {
             />
           </div>
           <div>
-            <label htmlFor="phoneNumber" className="order-input-label">Phone Number</label>
+            <label htmlFor="phoneNumber" className="order-input-label">
+              Phone Number
+            </label>
             <input
               type="tel"
               name="phoneNumber"
@@ -105,7 +162,9 @@ function Order() {
             />
           </div>
           <div>
-            <label htmlFor="address" className="order-input-label">Address</label>
+            <label htmlFor="address" className="order-input-label">
+              Address
+            </label>
             <input
               type="text"
               name="address"
@@ -140,7 +199,9 @@ function Order() {
               MOMO
             </label>
           </div>
-          <button type="submit" className="order-button-submit">Order</button>
+          <button type="submit" className="order-button-submit">
+            Order
+          </button>
         </form>
       </div>
       <div className="order-summary">
@@ -149,16 +210,22 @@ function Order() {
         </h4>
         <hr className="mt-4"></hr>
         <div className="d-flex justify-content-around">
-            <span className="order-product-name ms-3">Product Image</span>
-            <span className="order-product-name ms-5">Quantity</span>
-            <span className="order-product-price">Unit Price</span>
+          <span className="order-product-name ms-3">Product Image</span>
+          <span className="order-product-name ms-5">Quantity</span>
+          <span className="order-product-price">Unit Price</span>
         </div>
         <hr></hr>
         {displayedProducts.map((product) => (
           <div key={product.id} className="order-product">
-            <img src={product.images[0]} alt={product.name} className="order-product-image rounded-3" />
+            <img
+              src={product.images[0]}
+              alt={product.name}
+              className="order-product-image rounded-3"
+            />
             <span className="order-product-name">{product.name}</span>
-            <span className="order-product-name me-5">{product.product_quantity}</span>
+            <span className="order-product-name me-5">
+              {product.product_quantity}
+            </span>
             <span className="order-product-price">${product.price}</span>
           </div>
         ))}
@@ -167,7 +234,7 @@ function Order() {
             {showMore ? "View Less" : "View More"}
           </button>
         )}
-      <hr></hr>
+        <hr></hr>
       </div>
     </div>
   );
