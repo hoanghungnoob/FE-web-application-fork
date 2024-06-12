@@ -3,7 +3,6 @@ import "../assets/css/order.css";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 function Order() {
   const [formOrder, setFormOrder] = useState({
     userName: "",
@@ -25,7 +24,6 @@ function Order() {
         phoneNumber: decodedToken.phone_number,
         user_id: decodedToken.id,
       });
-      // console.log("dữ liệu form",formOrder)
     }
   }, [formOrder]);
 
@@ -53,56 +51,34 @@ function Order() {
     });
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log("Order submitted", formOrder);
-  // };
-  // const handleSubmit = async (formOrder) => {
-  //   try {
-  //     const res = await axios.post(`http://127.0.0.1:8000/api/admin/orders`, {
-  //       name: formOrder.name,
-  //       phone_number: formOrder.phone_number,
-  //       address: formOrder.address,
-  //       payment_method: formOrder.payment_method,
-  //       total_price: calculateTotal(),
-  //       user_id: formOrder.id,
-  //     });
-  //     console.log(res);
-  //     navigate('/success');
-  //   } catch (error) {
-  //     console.error("Error order", error);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const accountData = JSON.parse(sessionStorage.getItem("account"));
     const token = accountData ? accountData.token : null;
     if (!token) {
-      console.error('Token not found');
+      console.error("Token not found");
       return;
     }
-    // const decodedToken = jwtDecode(token);
-
     const orderData = {
       name: formOrder.userName,
       phone_number: formOrder.phoneNumber,
       address: formOrder.address,
       payment_method: formOrder.paymentMethod,
       total_price: calculateTotal(),
-      user_id: formOrder.user_id
+      user_id: formOrder.user_id,
     };
-
     try {
-      const res = await axios.post(`http://127.0.0.1:8000/api/admin/orders`, orderData);
+      const res = await axios.post(
+        `http://127.0.0.1:8000/api/admin/orders`,
+        orderData
+      );
       console.log(res);
-      navigate('/success');
+      navigate("/success");
     } catch (error) {
       console.error("Error order", error);
     }
   };
   const navigate = useNavigate();
-
   const calculateTotal = () => {
     return products
       .reduce((total, product) => {
@@ -110,7 +86,6 @@ function Order() {
       }, 0)
       .toFixed(2);
   };
-
   const handleViewMore = () => {
     setShowMore(!showMore);
   };
