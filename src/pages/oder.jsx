@@ -25,7 +25,7 @@ function Order() {
         user_id: decodedToken.id,
       });
     }
-  }, [formOrder]);
+  }, []);
 
   const [showMore, setShowMore] = useState(false);
 
@@ -69,7 +69,7 @@ function Order() {
     };
     try {
       const res = await axios.post(
-        `http://127.0.0.1:8000/api/admin/orders`,
+        `http://127.0.0.1:8000/api/user/orders`,
         orderData
       );
       console.log(res);
