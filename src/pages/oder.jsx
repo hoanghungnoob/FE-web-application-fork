@@ -3,6 +3,7 @@ import "../assets/css/order.css";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 function Order() {
   const [formOrder, setFormOrder] = useState({
     userName: "",
@@ -12,22 +13,26 @@ function Order() {
     paymentMethod: "Cash On Delivery",
     user_id: "",
   });
+  const [products, setProducts] = useState([]);
+  const [showMore, setShowMore] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const accountData = JSON.parse(sessionStorage.getItem("account"));
     const token = accountData ? accountData.token : null;
     if (token) {
       const decodedToken = jwtDecode(token);
-      setFormOrder({
-        ...formOrder,
+            setFormOrder((prevFormOrder) => ({
+        ...prevFormOrder,
         userName: decodedToken.name,
         email: decodedToken.email,
         phoneNumber: decodedToken.phone_number,
         user_id: decodedToken.id,
-      });
+      }));
     }
   }, []);
 
-  const [showMore, setShowMore] = useState(false);
+
 
   useEffect(() => {
     const storedProducts = JSON.parse(localStorage.getItem("selectedProducts"));
@@ -41,7 +46,7 @@ function Order() {
     }
   }, []);
 
-  const [products, setProducts] = useState([]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,7 +83,7 @@ function Order() {
       console.error("Error order", error);
     }
   };
-  const navigate = useNavigate();
+
   const calculateTotal = () => {
     return products
       .reduce((total, product) => {

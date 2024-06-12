@@ -154,7 +154,7 @@ function ShoppingCart() {
   console.log("giá trị cart", cart);
 
   return (
-    <div className="shoppingCart-page-container">
+    <div className="shoppingCart-page-container pb-5 pt-5">
       <div className="total-checkout">
         <div className="total-cart">
           <h4 className="total-price-cart">

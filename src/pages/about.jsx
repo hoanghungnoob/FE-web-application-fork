@@ -20,7 +20,7 @@ function App() {
     satisfiedCustomers: { value: '100%', label: 'Satisfied Customers' },
   };
   return (
-    <div>
+    <div className="pb-5">
       <ComeAndVisit image={aboutImage} title="About Us" isContactPage={false} />
       <div className="ABvideo-container">
         <video className="about-video" autoPlay loop muted>
