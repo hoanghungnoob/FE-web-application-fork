@@ -12,7 +12,6 @@ import ProductDetail from './pages/productDetail';
 import Menu from './pages/menu';
 import Order from './pages/oder';
 import Cart from './pages/shoppingCart'
-import { ShoppingCart } from '@mui/icons-material';
 import Success from './pages/Success';
 
 function App() {
