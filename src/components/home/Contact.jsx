@@ -14,7 +14,6 @@ function ComeAndVisit (props){
         color: "#fff",
         padding: "20px",
         borderRadius: "10px",
-        borderRadius: "12px",
         background: "#474747"
     };
     const containerImage = {

@@ -1,6 +1,5 @@
 import React from "react";
-import { Card, Col } from "antd";
-import { colors } from "@mui/material";
+import { Card } from "antd";
 const { Meta } = Card;
 const CardItem = ({ date, title, description, image }) => (
   <Card

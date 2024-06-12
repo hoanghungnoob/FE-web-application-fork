@@ -131,10 +131,22 @@ function Header() {
                   className="dropdown-menu"
                   aria-labelledby="dropdownMenuButton"
                 >
+                <li>
+                <Link to="/favorite" className="dropdown-item">
+                  Favorite
+                </Link>
+                  </li>
+                  <br/>
                   <li>
-                    <button className="dropdown-item" onClick={handleLogout}>
+                <Link to="/order" className="dropdown-item">
+                  Order
+                </Link>
+                  </li>
+                  <br/>
+                  <li>
+                    <p className="dropdown-item" onClick={handleLogout}>
                       Logout
-                    </button>
+                    </p>
                   </li>
                 </ul>
               </div>

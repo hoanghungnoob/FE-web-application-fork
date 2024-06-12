@@ -6,8 +6,8 @@
   #product-img {
     border: 1px;
     border-radius: 4%;
-    height: 80%;
-    width: 80%;
+    height: 250px;
+    width: 400px;
 
   }
   
@@ -50,7 +50,7 @@
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 400px;
   }
   
   .small-images img {

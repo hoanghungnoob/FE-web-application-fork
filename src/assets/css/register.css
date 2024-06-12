@@ -1,71 +1,78 @@
+.register-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, rgba(249, 249, 247, 0.9) 50%, white 50%);
+  padding: 20px;
+}
+
+.register-title {
+  font-size: 40px;
+  margin-bottom: 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
 .register-form-container {
-    width: 30%;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .title {
-    text-align: center;
-    font-size: 40px;
-    padding: 20px;
-  }
-  
-  .form-label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .form-control {
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-  }
-  
-  button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #0056b3;
-  }
+  background: #fff;
+  padding: 24px;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  max-width: 530px; 
+}
 
-  .register-form-container form div {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
+.ant-form-item-required {
+  &:before {
+    display: none !important;
   }
-  .option-login{
-    display: flex;
-    text-align: center;
-    justify-content: center;
-  }
-  .register-page .register-form-container form button {
-    border-radius: 15px;
-    background-color: #AD343E;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .register-page .register-form-container form button:hover {
-    background-color: #8C292F; /* Màu hover có thể thay đổi */
-  }
+}
 
-  .error-feedback{
-    color: red;
-    margin-top: 5px;
-  }
-  .footer{
-    margin-top: 20px;
-  }
+.ant-input,
+.ant-input-password {
+  width: calc(100% + 10px);
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.button-register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.button-register {
+  background-color: rgb(173, 52, 62);
+  border: none;
+  color: rgb(247, 243, 243);
+  text-align: center;
+  justify-content: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.button-register:hover {
+  background-color: rgb(173, 52, 62) !important;
+}
+
+.already-account {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.ant-input::placeholder,
+.ant-input-password::placeholder {
+  color: #606060;
+}
