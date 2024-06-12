@@ -42,8 +42,8 @@ const ProductList = () => {
   };
 
   return (
-    <div>
-      <h2 className="textProduct text-center">Favorite product</h2>
+    <div className='d-flex flex-column align-items-center pb-5 gap-3'>
+      <h2 className="textProduct text-center ">Favorite product</h2>
       {!Array.isArray(products) || products.length === 0 ? (
         <p className="text-center">There are no favorite products.</p>
       ) : (
