@@ -83,7 +83,7 @@ console.log(favoriteProducts);
       toast.success("Product add successfully");
     } else {
       setError("No token found. Please login first.");
-      toast.error("Failed to add item");
+      toast.error("You must login before adding to cart");
     }
   };
 
@@ -165,9 +165,9 @@ console.log(favoriteProducts);
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
 
   return (
     <div className="container" style={{ marginTop: "2em" }}>
