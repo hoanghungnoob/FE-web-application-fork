@@ -1,29 +1,36 @@
-import React from "react";
+import React, { useRef }  from "react";
 import { Send } from "../../components/button/Button.stories";
-import { Form, Input } from "antd";
+import { Form, Input, message } from "antd";
 import axios from "axios";
 const { TextArea } = Input;
 
-const onFinish = async (values) => {
-  try {
-    const response = await axios.post(
-      "http://127.0.0.1:8000/api/admin/contact/create",
-      values
-    );
-    console.log(response);
-    alert("Your contact information has been sent!");
-  } catch (error) {
-    console.error("Error occurred while submitting form:", error);
-  }
-};
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
-
 const ContactUsForm = () => {
+  const [form] = Form.useForm();
+
+  const onFinish = async (values) => {
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/admin/contact/create",
+        values
+      );
+      if(response){
+        message.success("Your contact information has been sent!");
+        form.resetFields(); // Reset fields after successful submission
+      }else{
+        message.error("Contact sent failed");
+      }
+    } catch (error) {
+      console.error("Error occurred while submitting form:", error);
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
   return (
     <div className="contact-form-container">
       <Form
+        form={form}
         name="contact"
         labelCol={{ span: 24 }}
         wrapperCol={{ span: 24 }}
@@ -43,11 +50,6 @@ const ContactUsForm = () => {
             {
               min: 5,
               message: "Name must be at least 5 characters!",
-            },
-            {
-              pattern: /^[a-zA-Z0-9_]+$/,
-              message:
-                "Name can only include letters, numbers, and underscores!",
             },
           ]}
         >
