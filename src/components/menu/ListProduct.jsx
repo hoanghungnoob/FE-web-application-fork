@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../menu/ListProduct.css";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Search from './Search';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { jwtDecode } from "jwt-decode";
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
@@ -12,6 +13,7 @@ const ListProduct = () => {
   const [error, setError] = useState(null);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [favoriteStatus, setFavoriteStatus] = useState({});
+  const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +38,7 @@ const ListProduct = () => {
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
       try {
-        const { token } = JSON.parse(sessionStorage.getItem("account")); // Lấy token từ sessionStorage
+        const { token } = JSON.parse(sessionStorage.getItem("account"));
         const response = await axios.get(`http://127.0.0.1:8000/api/user/wishlist`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -87,7 +89,6 @@ const ListProduct = () => {
     }
   };
 
- 
   const addToWishlist = async (productId) => {
     const accountData = JSON.parse(sessionStorage.getItem("account"));
     const token = accountData ? accountData.token : null;
@@ -148,7 +149,6 @@ const ListProduct = () => {
     }
   };
 
-
   const toggleFavorite = async (productId) => {
     if (favoriteStatus[productId]) {
       await removeFromWishlist(productId);
@@ -169,11 +169,12 @@ const ListProduct = () => {
     return <div>Error: {error.message}</div>;
   }
 
+  let displayProducts = searchResults.length > 0 ? searchResults : products;
+
   return (
     <div className="container" style={{ marginTop: "2em" }}>
-      <ToastContainer />
       <div className="row" style={{ gap: "2em" }}>
-        {products.map((product) => (
+        {displayProducts.map((product) => (
           <div
             key={product.id}
             className="card card-menu"
@@ -191,7 +192,7 @@ const ListProduct = () => {
               <h5 className="card-title text-danger">${product.price}</h5>
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // Ngăn chặn sự kiện click trên card
+                  e.stopPropagation();
                   toggleFavorite(product.id);
                 }}
                 className="btn btn-link heart-button"
@@ -202,7 +203,7 @@ const ListProduct = () => {
               <p className="card-text">{product.describe_product}</p>
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // Ngăn chặn sự kiện click trên card
+                  e.stopPropagation();
                   addToCart(product.id);
                 }}
                 className="btn btn-primary add-to-cart-btn"
