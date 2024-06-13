@@ -8,7 +8,6 @@ const RegisterForm = () => {
   const { postRegister } = useAuthService();
   const [form] = Form.useForm();
   const [errorEmail, setErrorEmail] = React.useState("");
-console.log('lỗi ',errorEmail);
   const onFinish = async (values) => {
     const { name, phone, email, password, confirmPassword } = values;
     try {
