@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../pages/context/SearchContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const ListProduct = () => {
   const { searchKeyword } = useContext(SearchContext);
@@ -19,23 +19,33 @@ const ListProduct = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          searchKeyword
-            ? `http://127.0.0.1:8000/api/user/product/search?search=${searchKeyword}`
-            : "http://127.0.0.1:8000/api/user/product"
-        );
-        console.log(">>>>>đây là data trả về", response.data);
-        setProducts(response.data);
-        setLoading(false);
-      } catch (error) {
+        const url = searchKeyword
+          ? `http://127.0.0.1:8000/api/user/product/search?search=${searchKeyword}`
+          : "http://127.0.0.1:8000/api/user/product";
+
+        const response = await axios.get(url);
+        if (response.data.error) {
+          toast.error("Product not found");
+          const allProductsResponse = await axios.get(
+            "http://127.0.0.1:8000/api/user/product"
+          );
+          setProducts(allProductsResponse.data);
+        } 
+        else {
+          setProducts(response.data);
+        }
+      } 
+      catch (error) {
         setError(error);
+      } 
+      finally {
         setLoading(false);
       }
     };
 
     fetchProducts();
   }, [searchKeyword]);
-  console.log(">>>>>",products);
+
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
       try {
@@ -85,7 +95,7 @@ const ListProduct = () => {
           },
         }
       );
-      toast.success("Product add successfully");
+      toast.success("Product added successfully");
     } else {
       setError("No token found. Please login first.");
       toast.error("You must login before adding to cart");
@@ -177,6 +187,7 @@ const ListProduct = () => {
 
   return (
     <div className="container" style={{ marginTop: "2em" }}>
+      <ToastContainer />
       <div className="row" style={{ gap: "2em" }}>
         {products.map((product) => (
           <div
