@@ -1,28 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../menu/ListProduct.css";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { SearchContext } from "../../pages/context/SearchContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {jwtDecode} from "jwt-decode";
 
 const ListProduct = () => {
+  const { searchKeyword } = useContext(SearchContext);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [favoriteStatus, setFavoriteStatus] = useState({});
   const navigate = useNavigate();
-console.log(favoriteProducts);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/user/product");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setProducts(data);
+        const response = await axios.get(
+          searchKeyword
+            ? `http://127.0.0.1:8000/api/user/product/search?search=${searchKeyword}`
+            : "http://127.0.0.1:8000/api/user/product"
+        );
+        console.log(">>>>>đây là data trả về", response.data);
+        setProducts(response.data);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -31,20 +34,22 @@ console.log(favoriteProducts);
     };
 
     fetchProducts();
-  }, []);
-
+  }, [searchKeyword]);
+  console.log(">>>>>",products);
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
       try {
-        const { token } = JSON.parse(sessionStorage.getItem("account")); // Lấy token từ sessionStorage
-        const response = await axios.get(`http://127.0.0.1:8000/api/user/wishlist`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const { token } = JSON.parse(sessionStorage.getItem("account"));
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/user/wishlist`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setFavoriteProducts(response.data);
 
-        // Tạo một đối tượng trạng thái yêu thích dựa trên danh sách yêu thích
         const favoriteStatuses = response.data.reduce((acc, product) => {
           acc[product.id] = true;
           return acc;
@@ -87,7 +92,6 @@ console.log(favoriteProducts);
     }
   };
 
- 
   const addToWishlist = async (productId) => {
     const accountData = JSON.parse(sessionStorage.getItem("account"));
     const token = accountData ? accountData.token : null;
@@ -104,7 +108,7 @@ console.log(favoriteProducts);
         "http://127.0.0.1:8000/api/user/wishlist",
         {
           product_id: productId,
-          user_id: userId
+          user_id: userId,
         },
         {
           headers: {
@@ -114,7 +118,6 @@ console.log(favoriteProducts);
       );
       toast.success("Product added to wishlist successfully");
 
-      // Cập nhật trạng thái yêu thích của sản phẩm
       const updatedFavoriteStatus = { ...favoriteStatus, [productId]: true };
       setFavoriteStatus(updatedFavoriteStatus);
     } catch (error) {
@@ -132,14 +135,16 @@ console.log(favoriteProducts);
     }
 
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/user/wishlist/${productId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `http://127.0.0.1:8000/api/user/wishlist/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast.success("Product removed from wishlist successfully");
 
-      // Cập nhật trạng thái yêu thích của sản phẩm
       const updatedFavoriteStatus = { ...favoriteStatus };
       delete updatedFavoriteStatus[productId];
       setFavoriteStatus(updatedFavoriteStatus);
@@ -147,7 +152,6 @@ console.log(favoriteProducts);
       toast.error("Failed to remove item from wishlist");
     }
   };
-
 
   const toggleFavorite = async (productId) => {
     if (favoriteStatus[productId]) {
@@ -158,20 +162,21 @@ console.log(favoriteProducts);
   };
 
   const handleProductClick = (product) => {
-    navigate(`/menu/${encodeURIComponent(product.name)}`, { state: { product } });
+    navigate(`/menu/${encodeURIComponent(product.name)}`, {
+      state: { product },
+    });
   };
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  // if (error) {
-  //   return <div>Error: {error.message}</div>;
-  // }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div className="container" style={{ marginTop: "2em" }}>
-      <ToastContainer />
       <div className="row" style={{ gap: "2em" }}>
         {products.map((product) => (
           <div
@@ -191,18 +196,20 @@ console.log(favoriteProducts);
               <h5 className="card-title text-danger">${product.price}</h5>
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // Ngăn chặn sự kiện click trên card
+                  e.stopPropagation();
                   toggleFavorite(product.id);
                 }}
                 className="btn btn-link heart-button"
               >
-                <i className={`fas fa-heart ${favoriteStatus[product.id] ? "text-danger" : ""}`}></i>
+                <i
+                  className={`fas fa-heart ${favoriteStatus[product.id] ? "text-danger" : ""}`}
+                ></i>
               </button>
               <h5 className="card-title">{product.name}</h5>
               <p className="card-text">{product.describe_product}</p>
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // Ngăn chặn sự kiện click trên card
+                  e.stopPropagation();
                   addToCart(product.id);
                 }}
                 className="btn btn-primary add-to-cart-btn"

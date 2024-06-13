@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import './Search.css';
+import React, { useState, useContext } from "react";
+import "./Search.css";
+import { SearchContext } from "../../pages/context/SearchContext";
 
 const Search = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const { searchKeyword, setSearchKeyword } = useContext(SearchContext);
+  const [searchTerm, setSearchTerm] = useState(searchKeyword);
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
-
   const handleSearch = () => {
-    // Implement the search functionality here
-    console.log('Searching for:', searchTerm);
+    setSearchKeyword(searchTerm);
   };
 
   return (
