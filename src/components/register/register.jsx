@@ -8,7 +8,7 @@ const RegisterForm = () => {
   const { postRegister } = useAuthService();
   const [form] = Form.useForm();
   const [errorEmail, setErrorEmail] = React.useState("");
-console.log(errorEmail);
+console.log('lỗi ',errorEmail);
   const onFinish = async (values) => {
     const { name, phone, email, password, confirmPassword } = values;
     try {
@@ -19,7 +19,6 @@ console.log(errorEmail);
         password,
         confirmPassword
       );
-
       if (response && !response.error) {
         setErrorEmail("");
         message.success("Register successfully!");
@@ -28,6 +27,12 @@ console.log(errorEmail);
         }, 1000);
       } else {
         setErrorEmail(response.error.email);
+        form.setFields([
+          {
+            name: 'email',
+            errors: [response.error.email],
+          },
+        ]);
       }
     } catch (error) {
       console.error("Error occurred during registration:", error);
@@ -62,11 +67,6 @@ console.log(errorEmail);
               {
                 min: 5,
                 message: "Name must be at least 5 characters!",
-              },
-              {
-                pattern: /^[a-zA-Z0-9_]+$/,
-                message:
-                  "Name can only include letters, numbers, and underscores!",
               },
             ]}
           >
