@@ -1,30 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../menu/ListProduct.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Search from './Search';
+import { SearchContext } from "../../pages/context/SearchContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 
 const ListProduct = () => {
+  const { searchKeyword } = useContext(SearchContext);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [favoriteStatus, setFavoriteStatus] = useState({});
-  const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/admin/product");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setProducts(data);
+        const response = await axios.get(
+          searchKeyword
+            ? `http://127.0.0.1:8000/api/user/product/search?search=${searchKeyword}`
+            : "http://127.0.0.1:8000/api/user/product"
+        );
+        console.log(">>>>>đây là data trả về", response.data);
+        setProducts(response.data);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -33,20 +34,22 @@ const ListProduct = () => {
     };
 
     fetchProducts();
-  }, []);
-
+  }, [searchKeyword]);
+  console.log(">>>>>",products);
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
       try {
         const { token } = JSON.parse(sessionStorage.getItem("account"));
-        const response = await axios.get(`http://127.0.0.1:8000/api/user/wishlist`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/user/wishlist`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setFavoriteProducts(response.data);
 
-        // Tạo một đối tượng trạng thái yêu thích dựa trên danh sách yêu thích
         const favoriteStatuses = response.data.reduce((acc, product) => {
           acc[product.id] = true;
           return acc;
@@ -85,7 +88,7 @@ const ListProduct = () => {
       toast.success("Product add successfully");
     } else {
       setError("No token found. Please login first.");
-      toast.error("Failed to add item");
+      toast.error("You must login before adding to cart");
     }
   };
 
@@ -105,7 +108,7 @@ const ListProduct = () => {
         "http://127.0.0.1:8000/api/user/wishlist",
         {
           product_id: productId,
-          user_id: userId
+          user_id: userId,
         },
         {
           headers: {
@@ -115,7 +118,6 @@ const ListProduct = () => {
       );
       toast.success("Product added to wishlist successfully");
 
-      // Cập nhật trạng thái yêu thích của sản phẩm
       const updatedFavoriteStatus = { ...favoriteStatus, [productId]: true };
       setFavoriteStatus(updatedFavoriteStatus);
     } catch (error) {
@@ -133,14 +135,16 @@ const ListProduct = () => {
     }
 
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/user/wishlist/${productId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `http://127.0.0.1:8000/api/user/wishlist/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast.success("Product removed from wishlist successfully");
 
-      // Cập nhật trạng thái yêu thích của sản phẩm
       const updatedFavoriteStatus = { ...favoriteStatus };
       delete updatedFavoriteStatus[productId];
       setFavoriteStatus(updatedFavoriteStatus);
@@ -158,7 +162,9 @@ const ListProduct = () => {
   };
 
   const handleProductClick = (product) => {
-    navigate(`/menu/${encodeURIComponent(product.name)}`, { state: { product } });
+    navigate(`/menu/${encodeURIComponent(product.name)}`, {
+      state: { product },
+    });
   };
 
   if (loading) {
@@ -169,12 +175,10 @@ const ListProduct = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  let displayProducts = searchResults.length > 0 ? searchResults : products;
-
   return (
     <div className="container" style={{ marginTop: "2em" }}>
       <div className="row" style={{ gap: "2em" }}>
-        {displayProducts.map((product) => (
+        {products.map((product) => (
           <div
             key={product.id}
             className="card card-menu"
@@ -197,7 +201,9 @@ const ListProduct = () => {
                 }}
                 className="btn btn-link heart-button"
               >
-                <i className={`fas fa-heart ${favoriteStatus[product.id] ? "text-danger" : ""}`}></i>
+                <i
+                  className={`fas fa-heart ${favoriteStatus[product.id] ? "text-danger" : ""}`}
+                ></i>
               </button>
               <h5 className="card-title">{product.name}</h5>
               <p className="card-text">{product.describe_product}</p>

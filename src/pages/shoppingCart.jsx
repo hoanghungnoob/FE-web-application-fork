@@ -5,11 +5,13 @@ import "../assets/css/shoppingCart.css";
 import { jwtDecode } from "jwt-decode";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 function ShoppingCart() {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -26,7 +28,9 @@ function ShoppingCart() {
               id: userId,
             }
           );
-          setCart(response.data.success);
+          // setCart(response.data.success);
+          const sortedCart = response.data.success.sort((a, b) => a.status - b.status);
+          setCart(sortedCart);
         } else {
           setError("No token found. Please login first.");
         }
@@ -107,6 +111,38 @@ function ShoppingCart() {
       .toFixed(2);
   };
 
+  const handleProductSelect = async (cartId, isSelected) => {
+    try {
+      await axios.put(`http://127.0.0.1:8000/api/user/cart/status/${cartId}`, {
+        status: isSelected ? 1 : 0,
+      });
+      setCart((prevCart) =>
+        prevCart.map((item) =>
+          item.id === cartId
+            ? { ...item, status: isSelected ? 1 : 0 }
+            : item
+        )
+      );
+    } catch (error) {
+      console.error("Error updating product status:", error);
+    }
+  };
+  // save to localstorage
+  const saveSelectedProductsToLocal = (selectedProducts) => {
+    localStorage.setItem("selectedProducts", JSON.stringify(selectedProducts));
+  };
+  const handleCheckout = () => {
+  const selectedProducts = cart.filter((product) => product.status === 0);
+  if (selectedProducts.length === 0) {
+    toast.error("Please select at least one product to checkout.");
+  } else {
+    // navigate to order page
+    saveSelectedProductsToLocal(selectedProducts);
+    navigate("../order");
+  }
+};
+
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -114,24 +150,33 @@ function ShoppingCart() {
   if (error) {
     return <div>Error: {error}</div>;
   }
+  
+  console.log("giá trị cart", cart);
 
   return (
-    <div className="shoppingCart-page-container">
+    <div className="shoppingCart-page-container pb-5 pt-5">
       <div className="total-checkout">
         <div className="total-cart">
           <h4 className="total-price-cart">
             Total Prices: ${totalShoppingCart()}
           </h4>
         </div>
-        <div className="button-cart">
-          <ButtonWhite children="Checkout" />
+        <div onClick={handleCheckout} className="button-cart">
+          <ButtonWhite>Checkout</ButtonWhite>
         </div>
       </div>
       <div className="shoppingCart-detail">
-      <ToastContainer />
+        <ToastContainer />
         {cart.map((product) => (
           <div className="cart-item" key={product.product_id}>
-            <input type="checkbox" name="selectedProduct" />
+            <input
+              type="checkbox"
+              checked={product.status === 0}
+              onChange={() =>
+                handleProductSelect(product.id, product.status !== 1)
+              }
+              name="selectedProduct"
+            />
             {product.images.length > 0 && (
               <img src={product.images[0]} alt={product.product_name} />
             )}
@@ -155,7 +200,10 @@ function ShoppingCart() {
                 </button>
               </div>
               <div className="button-cart-remove">
-                <button onClick={() => deleteCartItem(product.id)} className="btn btn-danger">
+                <button
+                  onClick={() => deleteCartItem(product.id)}
+                  className="btn btn-danger"
+                >
                   Remove
                 </button>
               </div>

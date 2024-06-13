@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import User from './pages/home';
 import Login from './pages/login';
 import { Routes, Route } from "react-router-dom";
-import axios from 'axios';
 import RegisterPage from './pages/register';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -13,7 +12,7 @@ import ProductDetail from './pages/productDetail';
 import Menu from './pages/menu';
 import Order from './pages/oder';
 import Cart from './pages/shoppingCart'
-import { ShoppingCart } from '@mui/icons-material';
+import Success from './pages/Success';
 
 function App() {
   return (
@@ -31,6 +30,7 @@ function App() {
         <Route path="/menu" element={<Menu />} />
         <Route path="/order" element={<Order />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/success" element={<Success />} />
       </Routes>
       <Footer />
     </div>

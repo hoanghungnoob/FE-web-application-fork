@@ -42,15 +42,15 @@ const ProductList = () => {
   };
 
   return (
-    <div>
-      <h2 className="textProduct text-center">Favorite product</h2>
+    <div className='d-flex flex-column align-items-center pb-5 gap-3'>
+      <h2 className="textProduct text-center ">Favorite product</h2>
       {!Array.isArray(products) || products.length === 0 ? (
         <p className="text-center">There are no favorite products.</p>
       ) : (
         products.map((product) => (
           <div className="cart-product" key={product.id}>
             <div className="item-image">
-              <img src={product.images} alt="Product" />
+            <img src={product.images[0]} alt={product.name} />
             </div>
             <div className="item-details">
               <h3 className="item-name">{product.name}</h3>
