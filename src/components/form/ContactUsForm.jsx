@@ -10,7 +10,7 @@ const ContactUsForm = () => {
   const onFinish = async (values) => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/admin/contact/create",
+        "http://127.0.0.1:8000/api/user/contact/create",
         values
       );
       if(response){
