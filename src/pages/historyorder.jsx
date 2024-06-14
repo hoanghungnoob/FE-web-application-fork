@@ -48,7 +48,7 @@ function Historyorder() {
         );
 
         const updatedOrders = userOrder.map((order) =>
-            order.id === orderId ? { ...order, status: "cancelled" } : order
+            order.id === orderId ? { ...order, status: "Cancelled" } : order
         );
         setUserOrder(updatedOrders);
     } catch (err) {
