@@ -98,7 +98,7 @@ function ComeAndVisit (props){
                         </p>
                         {isContactPage && (
                                     <div style={styleButtonAboutUs}>
-                                        <Link to="/user/aboutus"><MoreAboutUs /></Link>
+                                        <Link to="/about"><MoreAboutUs /></Link>
                                     </div>
                                 )}
                     </div>

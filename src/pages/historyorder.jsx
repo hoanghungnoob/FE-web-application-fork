@@ -44,11 +44,11 @@ function Historyorder() {
     try {
         await axios.put(
             `http://127.0.0.1:8000/api/user/orders/cancel/${orderId}`,
-            { status: "cancelled" }
+            { status: "canceled" }
         );
 
         const updatedOrders = userOrder.map((order) =>
-            order.id === orderId ? { ...order, status: "Cancelled" } : order
+            order.id === orderId ? { ...order, status: "Canceled" } : order
         );
         setUserOrder(updatedOrders);
     } catch (err) {

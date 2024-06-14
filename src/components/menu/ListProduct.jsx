@@ -203,7 +203,7 @@ const ListProduct = () => {
               />
             )}
             <div className="card-body text-center">
-              <h5 className="card-title text-danger">${product.price}</h5>
+              <h5 className="card-title text-danger">${product.sell_price}</h5>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
