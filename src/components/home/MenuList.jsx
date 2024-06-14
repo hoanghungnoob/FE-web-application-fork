@@ -14,28 +14,28 @@ function MenuList() {
       titleImage: "iconmenubreakfast.png",
       titleMenu: "Breakfast",
       description: "In the new era of technology we look in the future with certainty and pride for our life.",
-      url: "user/menu"
+      url: "/menu"
     },
     {
       image: iconmenumaindish,
       titleImage: "iconmenumaindish.png",
       titleMenu: "Main Dishes",
       description: "In the new era of technology we look in the future with certainty and pride for our life.",
-      url: "user/menu"
+      url: "/menu"
     },
     {
       image: iconmenudrinks,
       titleImage: "Drinks.png",
       titleMenu: "Breakfast",
       description: "In the new era of technology we look in the future with certainty and pride for our life.",
-      url: "user/menu"
+      url: "/menu"
     },
     {
       image: iconmenudesserts,
       titleImage: "iconmenudesserts.png",
       titleMenu: "Desserts",
       description: "In the new era of technology we look in the future with certainty and pride for our life.",
-      url: "user/menu"
+      url: "/menu"
     },
   ]
   return (

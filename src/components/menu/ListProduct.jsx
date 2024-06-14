@@ -45,7 +45,7 @@ const ListProduct = () => {
 
     fetchProducts();
   }, [searchKeyword]);
-
+  console.log(favoriteProducts);
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
       try {
@@ -79,7 +79,7 @@ const ListProduct = () => {
     const accountData = JSON.parse(sessionStorage.getItem("account"));
     const token = accountData ? accountData.token : null;
 
-    if (token) {
+    if (token!=null) {
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.id;
       await axios.post(
@@ -97,7 +97,6 @@ const ListProduct = () => {
       );
       toast.success("Product added successfully");
     } else {
-      setError("No token found. Please login first.");
       toast.error("You must login before adding to cart");
     }
   };
