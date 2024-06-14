@@ -37,7 +37,7 @@ const RegisterForm = () => {
       console.error("Error occurred during registration:", error);
     }
   };
-
+console.log(errorEmail);
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };

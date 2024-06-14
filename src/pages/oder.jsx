@@ -22,7 +22,7 @@ function Order() {
     const token = accountData ? accountData.token : null;
     if (token) {
       const decodedToken = jwtDecode(token);
-            setFormOrder((prevFormOrder) => ({
+      setFormOrder((prevFormOrder) => ({
         ...prevFormOrder,
         userName: decodedToken.name,
         email: decodedToken.email,
@@ -32,21 +32,12 @@ function Order() {
     }
   }, []);
 
-
-
   useEffect(() => {
     const storedProducts = JSON.parse(localStorage.getItem("selectedProducts"));
     if (storedProducts) {
       setProducts(storedProducts);
-      console.log(
-        "Số lượng sản phẩm trong localStorage:",
-        storedProducts.length
-      );
-      console.log("sản phẩm trong localStorage:", storedProducts);
     }
   }, []);
-
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -72,15 +63,32 @@ function Order() {
       total_price: calculateTotal(),
       user_id: formOrder.user_id,
     };
-    try {
-      const res = await axios.post(
-        `http://127.0.0.1:8000/api/user/orders`,
-        orderData
-      );
-      console.log(res);
-      navigate("/success");
-    } catch (error) {
-      console.error("Error order", error);
+
+    if (formOrder.paymentMethod === "Cash On Delivery") {
+      try {
+        const res = await axios.post(
+          `http://127.0.0.1:8000/api/user/orders`,
+          orderData
+        );
+        console.log(res);
+        navigate("/success");
+      } catch (error) {
+        console.error("Error ordering:", error);
+      }
+    } else if (formOrder.paymentMethod === "MOMO") {
+      try {
+        sessionStorage.setItem("orderData",JSON.stringify(orderData));
+        const momoResponse = await axios.post(
+          `http://127.0.0.1:8000/api/user/orders`,
+          orderData
+        );
+        console.log("MoMo response:", momoResponse);
+        // Redirect user to MoMo payment URL or handle as needed
+        window.location.href = momoResponse.data.payUrl; // Example: redirect to MoMo payment URL
+      } catch (error) {
+        console.error("MoMo payment error:", error);
+        // Handle MoMo payment error
+      }
     }
   };
 
@@ -91,6 +99,7 @@ function Order() {
       }, 0)
       .toFixed(2);
   };
+
   const handleViewMore = () => {
     setShowMore(!showMore);
   };
@@ -221,3 +230,4 @@ function Order() {
 }
 
 export default Order;
+
