@@ -138,7 +138,7 @@ function Header() {
                   </li>
                   <br/>
                   <li>
-                <Link to="/order" className="dropdown-item">
+                <Link to="/history" className="dropdown-item">
                   Order
                 </Link>
                   </li>

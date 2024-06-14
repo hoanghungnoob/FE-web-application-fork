@@ -1,0 +1,8 @@
+.history-detail{
+    width: 1412px;
+    position: 'absolute';
+    inset: '0 auto auto 0';
+    margin: 0;
+    transform: translate(-1016px, 57px) !important;
+    background-color:'mediumaquamarine';
+}
